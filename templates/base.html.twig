@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{% block title %}{% endblock %} - Sapeurs-Pompiers de Saint Julien de Concelles</title>
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/fontawesome-all.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+  <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
+  {% block stylesheets %}{% endblock %}
+</head>
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-xl navbar-light bg-white border-bottom border-danger p-0">
+    <div class="container mx-xs-4">
+        <a class="navbar-brand p-0 mr-2" href="{{ path('accueil') }}"><img src="{{ asset('images/logo_cis_couleur.png') }}" alt="CIS Saint Julien de Concelles" class="img-fluid logoCentre"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Ouvrir le menu">
+          <i class="fa fa-bars rouge"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item mr-1">
+              <a href="{{ path('articles') }}" class="nav-link lienMenu">Actualité</a>
+            </li>
+            <li class="nav-item mr-1">
+              <a href="#" class="nav-link lienMenu">&Eacute;vénements</a>
+            </li>
+            <li class="nav-item dropdown mr-1">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Navigation</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item rouge" href="{{ path('accueil') }}">Accueil</a>
+                <a class="dropdown-item rouge" href="#">Contact</a>
+                <a class="dropdown-item rouge" href="#">Recrutement</a>
+                <a class="dropdown-item rouge" href="#">&Agrave; propos du centre</a>
+                <a class="dropdown-item rouge" href="#">Contact</a>
+              </div>
+            </li>
+          </ul>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+              <div class="inline mb-3 mb-xl-2 my-2 dropdown">
+                <button class="btn btn-danger dropdown-toggle" type="button" id="menuUtilisateur" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Bienvenue, {{ app.user.prenom }} !</button>
+                <div class="dropdown-menu menuUtilisateur" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#"><i class="fa fa-cog"></i> Mon compte</a>
+                  {% if is_granted('ROLE_ADMIN') %}
+                    <a class="dropdown-item" href="#"><i class="fa fa-unlock-alt"></i> Administration</a>
+                  {% endif %}
+                  <a class="dropdown-item bg-danger text-white" href="{{ path('deconnexion') }}"><i class="fa fa-sign-out-alt"></i> Déconnexion</a>
+                </div>
+              </div>
+            {% else %}
+              <div class="inline mb-3 mb-xl-2 my-2">
+                <a class="btn btn-outline-danger" href="{{ path('connexion') }}">Connexion</a>
+                <a class="btn btn-danger ml-2" href="{{ path('inscription') }}"><i class="fas fa-user-plus"></i> Inscription</a>
+              </div>
+            {% endif %}
+        </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid bg-white contenu">
+    <div class="container py-4">
+      {% block body %}{% endblock %}
+    </div>
+  </div>
+
+  <div class="container-fluid d-none d-md-block piedDePage">
+    <div class="container">
+      <div class="row text-center py-3">
+        <div class="col-12 col-md-4">
+          <h5 class="text-uppercase font-weight-bold">Recrutement</h5>
+          <p>Le CIS Saint Julien de Concelles recherche continuellement des Sapeurs-Pompiers Volontaires entre 16 et 60 ans pour renforcer leurs rangs !</p>
+          <a href="#" class="btn btn-outline-light">Plus d'informations</a>
+        </div>
+        <div class="col-12 col-md-4">
+          <h5 class="text-uppercase font-weight-bold text-center">SDIS 44</h5>
+          <p>Le CIS Saint Julien de Concelles est rattaché au groupement de Nantes du Service Départemental d'Incendie et de Secours de Loire-Atlantique (SDIS&nbsp;44).</p>
+          <a href="http://www.sdis44.fr" target="_blank" class="btn btn-outline-light">Visiter le site du SDIS 44</a>
+        </div>
+        <div class="col-12 col-md-4">
+          <h5 class="text-uppercase font-weight-bold text-center">Réalisation</h5>
+          <p>Ce site a été entièrement réalisé par Simon Jaunet. Pour toute question ou renseignement, n'hésitez pas à utiliser le formulaire prévu à cet effet.</p>
+          <a href="#" class="btn btn-outline-light">Contact</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid d-none d-md-block border-top border-danger piedDePage">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col py-3">
+          © CIS Saint Julien de Concelles - 2018
+        </div>
+      </div>
+    </div>
+  </div>
+  {% block javascripts %}{% endblock %}
+  <script src="{{ asset('js/jquery.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('js/bootstrap.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('js/main.js') }}" charset="utf-8"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block stylesheets %}<script src='https://www.google.com/recaptcha/api.js'></script>{% endblock %}
+
+{% block body %}
+<h1>Inscription</h1>
+{{ form_start(form, { 'attr': {'class': 'was-validated'}}) }}
+  <h4 class="mt-4">Vos identifiants de connexion</h4>
+  <p id="infoHelpBlock" class="text-muted mb-4">
+    Ces informations resteront internes au CIS Saint Julien de Concelles en toutes circonstances.
+  </p>
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        {{ form_label(form.prenom) }}
+        {{ form_widget(form.prenom) }}
+      </div>
+      <div class="form-group">
+        {{ form_label(form.nom) }}
+        {{ form_widget(form.nom) }}
+      </div>
+      <div class="form-group">
+        {{ form_label(form.dateDeNaissance) }}
+        {{ form_widget(form.dateDeNaissance) }}
+      </div>
+    </div>
+    <div class="col">
+      <img src="{{ asset('images/layout/inc01.png') }}" class="img-fluid rounded" alt="INC01">
+    </div>
+  </div>
+  <div class="form-group">
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    <small id="emailHelpBlock" class="form-text text-muted">
+      Votre adresse e-mail sera votre identifiant de connexion.
+    </small>
+  </div>
+  <div class="row">
+    <div class="col form-group">
+      {{ form_label(form.password.first) }}
+      {{ form_widget(form.password.first) }}
+      <small id="passwordHelpBlock" class="form-text text-muted">
+        Votre mot de passe doit contenir entre 8 et 20 caractères.
+      </small>
+    </div>
+    <div class="col form-group">
+      {{ form_label(form.password.second) }}
+      {{ form_widget(form.password.second) }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="d-block m-auto">
+      <div class="g-recaptcha" data-sitekey="6Lc7r1QUAAAAAFJtN5hRnnHEAzy260bh_CsvraVg"></div>
+    </div>
+  </div>
+  <input type="submit" class="btn btn-danger d-block mx-auto mt-4" name="inscription" value="S'inscrire">
+{{ form_end(form) }}
+{% endblock %}

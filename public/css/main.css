@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+* {
+  font-family: 'Lato', sans-serif;
+}
+
+h1 {
+  color: #dc3545;
+  text-transform: uppercase;
+  font-size: 35px;
+  border-bottom: 1px solid #dc3545;
+}
+
+h2 {
+  color: #dc3545;
+}
+
+h3 {
+  color: #0066b3;
+}
+
+h4 {
+  color: #0066b3;
+}
+
+input[type="text"]:focus {
+  outline-color: red;
+}
+
+/*PAGE D'ACCUEIL*/
+.logoCentre {
+  max-height: 80px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #dc3545;
+  /* text-transform: uppercase; */
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: #9f1c29;
+  /* border-bottom: 1px solid #9f1c29; */
+}
+
+.piedDePage {
+  color: white;
+}
+
+.navbar-light .navbar-toggler {
+  border-color: #dc3545;
+}
+
+.rouge {
+  color: #dc3545;
+}
+
+.dropdown-item.rouge:hover, .navbar-light .navbar-nav .show > .nav-link {
+  color: #721c24;
+}
+
+.menuUtilisateur {
+  padding: 0;
+}
+
+.menuUtilisateur .dropdown-item {
+  padding: 10px 20px;
+  color: #dc3545;
+}
+
+textarea {
+  resize: none;
+}
+
+$custom-file-text: (
+  en: "Browse",
+  fr: "Sélectionner"
+);

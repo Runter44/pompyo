@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualité{% endblock %}
+
+{% block body %}
+<h1>Actualité du centre</h1>
+{% if is_granted('ROLE_ADMIN') %}
+  <div class="adminArticles text-center">
+    <a class="btn btn-danger" href="{{ path('nouvelArticle') }}"><i class="fa fa-plus"></i> Nouvel article</a>
+  </div>
+{% endif %}
+{% for article in articles %}
+<div class="row mt-3">
+  <div class="col-3 p-2">
+    <a href="{{ path('voirArticle', { url: article.url }) }}"><img src="{{ asset('uploads/articles/miniatures/') }}{{ article.miniature }}" alt="Miniature" class="img-fluid rounded"></a>
+  </div>
+  <div class="col-9 py-2">
+    <a href="{{ path('voirArticle', { url: article.url }) }}"><h4>{{ article.titre }}</h4></a>
+    <p class="small text-muted mb-1">Par {{article.auteur.prenom}} {{article.auteur.nom}}, le {{ article.dateCreation|date("d/m/Y à H:i") }}</p>
+    <p>{{ article.description }}</p>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

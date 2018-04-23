@@ -40,3 +40,4 @@ security:
         - { path: ^/connexion/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/inscription/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/articles/nouveau/, role: ROLE_ADMIN }
+        - { path: ^/articles/supprimer/, role: ROLE_ADMIN }

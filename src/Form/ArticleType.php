@@ -51,6 +51,9 @@ class ArticleType extends AbstractType
             ))
             ->add('contenu', TextareaType::class, array(
               'label' => 'Contenu de l\'article',
+              'label_attr' => array(
+                'class' => 'col-sm-2 col-form-label align-middle d-inline'
+              ),
               'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Entrez le contenu de l\'article',

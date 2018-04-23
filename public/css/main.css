@@ -54,6 +54,10 @@ input[type="text"]:focus {
   color: #dc3545;
 }
 
+.text-bleu {
+  color: #0066b3;
+}
+
 .dropdown-item.rouge:hover, .navbar-light .navbar-nav .show > .nav-link {
   color: #721c24;
 }
@@ -71,7 +75,22 @@ textarea {
   resize: none;
 }
 
-$custom-file-text: (
-  en: "Browse",
-  fr: "Sélectionner"
-);
+.lienArticle h4 {
+  color: #dc3545;
+}
+
+.lienArticle:hover {
+  text-decoration: none;
+}
+
+.lienArticle:hover h4 {
+  color: #9f1c29;
+}
+
+a {
+  color: #dc3545;
+}
+
+a:hover {
+  color: #9f1c29;
+}

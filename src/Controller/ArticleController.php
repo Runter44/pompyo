@@ -7,6 +7,7 @@ use App\Entity\Article;
 use App\Entity\Utilisateur;
 use App\Utils\Slugger;
 use App\Utils\TimeAgo;
+use App\Utils\BBCoder;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -30,7 +31,7 @@ class ArticleController extends Controller
     /**
      * @Route("/articles/nouveau/", name="nouvelArticle")
      */
-    public function nouvelArticle(Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user, Slugger $slugger)
+    public function nouvelArticle(Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user, Slugger $slugger, BBCoder $bbcoder)
     {
         if ($authChecker->isGranted('ROLE_ADMIN')) {
 
@@ -51,6 +52,7 @@ class ArticleController extends Controller
               // on insère les paramètres prédéfinis
               $article->setAuteur($user);
               $article->setContenuBbcode($article->getContenu());
+              $article->setContenu($bbcoder->bbcodeToHtml($article->getContenuBbcode()));
               $article->setDateCreation(new \DateTime());
               $article->setUrl($slugger->genererSlug($article->getTitre()));
 
@@ -80,5 +82,20 @@ class ArticleController extends Controller
         return $this->render('article/voirArticle.html.twig', [
           'article' => $article,
         ]);
+    }
+
+    /**
+     * @Route("/articles/supprimer/{id}/", name="supprimerArticle")
+     */
+    public function supprimerArticle($id, AuthorizationCheckerInterface $authChecker)
+    {
+        if ($authChecker->isGranted('ROLE_ADMIN')) {
+          $entityManager = $this->getDoctrine()->getManager();
+          $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
+
+          $entityManager->remove($article);
+          $entityManager->flush();
+        }
+        return $this->redirectToRoute('articles');
     }
 }

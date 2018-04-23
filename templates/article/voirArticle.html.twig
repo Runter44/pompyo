@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Actualité{% endblock %}
+{% block title %}{{ article.titre }}{% endblock %}
 
 {% block body %}
 <h1>{{ article.titre }}</h1>
 {% if is_granted('ROLE_ADMIN') %}
   <div class="adminArticles text-center my-3">
     <a class="btn btn-danger mr-3" href="#"><i class="fa fa-edit"></i> Modifier l'article</a>
-    <a class="btn btn-danger" href="#"><i class="fa fa-trash-alt"></i> Supprimer l'article</a>
+    <a class="btn btn-danger" href="#" onclick="confirmerSuppressionArticle()"><i class="fa fa-trash-alt"></i> Supprimer l'article</a>
   </div>
 {% endif %}
 <div class="row">
@@ -15,9 +15,19 @@
     <img src="{{ asset('uploads/articles/miniatures/') }}{{ article.miniature }}" alt="Miniature" class="img-fluid rounded">
   </div>
   <div class="col-8">
-    <p>Le {{ article.dateCreation|date("d/m/Y à H:i") }} par {{article.auteur.prenom}} {{article.auteur.nom}}</p>
+    <p>Le {{ article.dateCreation|date("d/m/Y à H\\hi") }} par {{article.auteur.prenom}} {{article.auteur.nom}}</p>
     <p>{{ article.description }}</p>
   </div>
 </div>
-<p>{{ article.contenu }}</p>
+<p>{{ article.contenu|raw }}</p>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+  function confirmerSuppressionArticle() {
+    if (confirm("Voulez-vous vraiment supprimer cet article ? Cette action est irréversible.")) {
+      document.location = '{{ path('supprimerArticle', {'id': article.id}) }}';
+    }
+  }
+</script>
 {% endblock %}

@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Utils\Slugger;
 
 class AjaxController extends Controller
 {
@@ -24,6 +25,20 @@ class AjaxController extends Controller
           } else {
             return new Response("");
           }
+        }
+        return new Response("Mauvaise requête !", 400);
+    }
+
+    /**
+     * @Route("/ajax/upload-image/", name="uploadImage")
+     */
+    public function uploadImage(Request $request)
+    {
+        if ($request->files->get("imageUpload") != null) {
+            $image = $request->files->get("imageUpload");
+            $nomImage = md5(uniqid()).'.'.$image->guessExtension();
+            $image->move($this->getParameter('images_articles_directory'), $nomImage);
+            return new Response($nomImage);
         }
         return new Response("Mauvaise requête !", 400);
     }

@@ -12,7 +12,7 @@
 {% for article in articles %}
 <div class="row mt-3">
   <div class="col-3 p-2">
-    <a href="{{ path('voirArticle', { url: article.url }) }}"><img src="{{ asset('uploads/articles/miniatures/') }}{{ article.miniature }}" alt="Miniature" class="img-fluid rounded"></a>
+    <a href="{{ path('voirArticle', { url: article.url }) }}"><img src="{{ asset('uploads/articles/miniatures/') }}{{ article.miniature }}" alt="Miniature" class="img-fluid rounded imageArticle"></a>
   </div>
   <div class="col-9 py-2">
     <a class="lienArticle" href="{{ path('voirArticle', { url: article.url }) }}"><h4>{{ article.titre }}</h4></a>

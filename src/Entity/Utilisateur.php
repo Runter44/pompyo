@@ -20,6 +20,10 @@ class Utilisateur implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     *
+     * @Assert\Length(max=100, maxMessage="L'adresse mail est trop longue")
+     * @Assert\NotBlank(message="L'adresse e-mail est invalide")
+     * @Assert\Email(message="L'adresse e-mail est invalide", checkMX = true)
      */
     private $email;
 
@@ -30,17 +34,25 @@ class Utilisateur implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
+     * @Assert\Length(max=50, maxMessage="Le prénom est trop long")
+     * @Assert\NotBlank(message="Le prénom est invalide")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
+     * @Assert\Length(max=50, maxMessage="Le nom est trop long")
+     * @Assert\NotBlank(message="Le nom est invalide")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\Date()
+     *
+     * @Assert\Date(message="La date de naissance est invalide")
+     * @Assert\NotBlank(message="La date de naissance est invalide")
      */
     private $dateDeNaissance;
 

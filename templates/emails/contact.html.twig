@@ -1,0 +1,19 @@
+<h3>Nouvelle demande de contact</h3>
+
+<p>
+    {{ contact.prenom }} {{ contact.nom }} a rédigé une demande de contact via le site web du CIS Saint Julien de Concelles.
+</p>
+<p>
+    Demande envoyée depuis l'adresse IP {{ contact.ipEnvoi }} le {{ contact.dateEnvoi|localizeddate("none", "none", "fr", null, "d MMMM Y 'à' HH'h'mm") }}.
+</p>
+<p>
+    <b>Coordonnées :</b><br>
+    <b>Nom :</b> {{ contact.prenom }} {{ contact.nom }}<br>
+    <b>Email :</b> {{ contact.email }}<br>
+    <b>Téléphone :</b> {% if contact.phone != null %}{{ contact.phone }}{% else %}Non renseigné{% endif %}
+</p>
+<p>
+    <b>Objet :</b> {{ contact.object }}<br>
+    <b>Message :</b><br>
+    {{ contact.message|nl2br }}
+</p>

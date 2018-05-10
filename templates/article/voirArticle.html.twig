@@ -3,10 +3,10 @@
 {% block title %}{{ article.titre }}{% endblock %}
 
 {% block body %}
-<h1>{{ article.titre }}</h1>
+<h1 class="mb-4">{{ article.titre }}</h1>
 {% if is_granted('ROLE_ADMIN') %}
   <div class="adminArticles text-center my-3">
-    <a class="btn btn-danger mr-3" href="#"><i class="fa fa-edit"></i> Modifier l'article</a>
+    <a class="btn btn-danger mr-3" href="{{ path('modifierArticle', {"slug": article.url}) }}"><i class="fa fa-edit"></i> Modifier l'article</a>
     <a class="btn btn-danger" href="#" onclick="confirmerSuppressionArticle()"><i class="fa fa-trash-alt"></i> Supprimer l'article</a>
   </div>
 {% endif %}
@@ -15,7 +15,7 @@
     <img src="{{ asset('uploads/articles/miniatures/') }}{{ article.miniature }}" alt="Miniature" class="img-fluid rounded">
   </div>
   <div class="col-8">
-    <p>Le {{ article.dateCreation|date("d/m/Y à H\\hi") }} par {{article.auteur.prenom}} {{article.auteur.nom}}</p>
+    <p class="text-bleu">Le {{ article.dateCreation|localizeddate("none", "none", "fr", null, "d MMMM Y 'à' HH'h'mm") }} par {{article.auteur.prenom}} {{article.auteur.nom}}</p>
     <p>{{ article.description }}</p>
   </div>
 </div>

@@ -13,6 +13,8 @@ class AjaxController extends Controller
 {
     /**
      * @Route("/ajax/existe-email/", name="verificationDoublonEmail")
+     * @param Request $request
+     * @return Response
      */
     public function verificationDoublonEmail(Request $request)
     {
@@ -31,6 +33,8 @@ class AjaxController extends Controller
 
     /**
      * @Route("/ajax/upload-image/", name="uploadImage")
+     * @param Request $request
+     * @return Response
      */
     public function uploadImage(Request $request)
     {

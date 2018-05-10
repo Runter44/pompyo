@@ -44,6 +44,7 @@ class ArticleType extends AbstractType
                 'class' => 'custom-file-label',
                 'id' => 'nomMiniatureInput',
               ),
+              'required' => false,
               'attr' => array(
                 'class' => 'custom-file-input',
                 'accept' => 'image/jpeg',

@@ -1,0 +1,25 @@
+<div class="border-bottom border-danger py-3 blocEvenement">
+    <h2 class="titreEvenement"><a href="{{ path('evenement_show', {"slug": evenement.slug}) }}">{{ evenement.nom }}</a>
+    </h2>
+    {% if evenement.roleMinimum == 'ROLE_PRIVE' %}
+    <span class="badge badge-info petitBadge">Événement privé</span>
+    {% endif %}<br>
+
+    <p class="dateEvenement d-inline mr-3">
+        <i class="far fa-clock"></i>
+        Le {{ evenement.dateDebut ? evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") : '' }}
+        à {{ evenement.heureDebut ? evenement.heureDebut|localizeddate("none", "none", "fr", null, "HH'h'mm") : '' }}
+    </p>
+    <p class="villeEvenement d-inline"><i class="far fa-building"></i> {{ evenement.lieu }}</p>
+    <p class="my-2 text-justify">{{ evenement.teaser|nl2br }}</p>
+    <a href="{{ path('evenement_show', {"slug": evenement.slug}) }}" class="btn btn-sm btn-danger">
+        <i class="fa fa-search-plus"></i>
+        Détails{% if evenement.inscriptionPossible == true %} et inscriptions{% endif %}
+    </a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="#" class="btn btn-sm btn-danger">
+            <i class="fa fa-users"></i>
+            Voir la liste des participants
+        </a>
+    {% endif %}
+</div>

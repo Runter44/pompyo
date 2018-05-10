@@ -26,7 +26,7 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-              'SELECT p FROM App:Article p ORDER BY p.dateCreation DESC'
+              'SELECT p FROM App:Article p ORDER BY p.dateModif DESC'
             )
             ->getResult()
         ;

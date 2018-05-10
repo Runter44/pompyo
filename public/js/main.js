@@ -35,6 +35,13 @@ $(document).ready(function() {
 
     $("#article_miniature").change(function() {
         readURL(this, $('#apercuMiniature'), $("#nomMiniatureInput"));
+        if (this.files[0].name.toLowerCase().endsWith(".jpg")) {
+            readURL(this, $("#apercuMiniature"), $("#nomMiniatureInput"));
+        } else {
+            alert("Le fichier sélectionné n'est pas valide !");
+            $("#article_miniature").val("");
+            readURL(this, $("#apercuMiniature"), $("#nomMiniatureInput"));
+        }
     });
 
     $("#imageUpload").change(function(event) {
@@ -66,6 +73,28 @@ $(document).ready(function() {
             bbcode("[img]"+data, "[/img]");
           }
         });
+    });
+
+    /* EVENEMENTS */
+    if (!$("#evenement_inscriptionPossible").is(':checked')) {
+        $("#evenement_dateLimiteInscription").hide();
+        $("#evenement_dateLimiteInscription_label").hide();
+    }
+
+    $("#evenement_dateLimiteInscription").attr('max', $("#evenement_dateDebut").val());
+
+    $("#evenement_dateDebut").change(function () {
+        $("#evenement_dateLimiteInscription").attr('max', $("#evenement_dateDebut").val());
+    });
+
+    $("#evenement_inscriptionPossible").change(function () {
+        if ($("#evenement_inscriptionPossible").is(':checked')) {
+            $("#evenement_dateLimiteInscription").show();
+            $("#evenement_dateLimiteInscription_label").show();
+        } else {
+            $("#evenement_dateLimiteInscription").hide();
+            $("#evenement_dateLimiteInscription_label").hide();
+        }
     });
 });
 

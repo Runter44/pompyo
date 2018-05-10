@@ -60,6 +60,11 @@ class Article
      */
     private $url;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateModif;
+
     public function getId()
     {
         return $this->id;
@@ -89,12 +94,12 @@ class Article
         return $this;
     }
 
-    public function getMiniature(): ?string
+    public function getMiniature()
     {
         return $this->miniature;
     }
 
-    public function setMiniature(string $miniature): self
+    public function setMiniature($miniature): self
     {
         $this->miniature = $miniature;
 
@@ -157,6 +162,18 @@ class Article
     public function setUrl(string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getDateModif(): ?\DateTimeInterface
+    {
+        return $this->dateModif;
+    }
+
+    public function setDateModif(\DateTimeInterface $dateModif): self
+    {
+        $this->dateModif = $dateModif;
 
         return $this;
     }

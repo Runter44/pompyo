@@ -1,0 +1,26 @@
+{{ form_start(form) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.lieu) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.dateDebut) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.heureDebut) }}
+        </div>
+    </div>
+    <div class="row my-4">
+        <div class="col">
+            {{ form_row(form.visiblePublic) }}
+            {{ form_row(form.inscriptionPossible) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.dateLimiteInscription) }}
+        </div>
+    </div>
+    {{ form_row(form.teaser) }}
+    {{ form_row(form.description) }}
+    <button class="btn btn-danger d-block mx-auto">
+        <i class="far fa-edit"></i> {{ button_label|default('Créér l\'événement') }}
+    </button>
+{{ form_end(form) }}

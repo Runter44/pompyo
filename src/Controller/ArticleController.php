@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ArticleController extends Controller
 {
@@ -30,6 +31,12 @@ class ArticleController extends Controller
 
     /**
      * @Route("/articles/nouveau/", name="nouvelArticle")
+     * @param Request $request
+     * @param AuthorizationCheckerInterface $authChecker
+     * @param UserInterface $user
+     * @param Slugger $slugger
+     * @param BBCoder $bbcoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function nouvelArticle(Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user, Slugger $slugger, BBCoder $bbcoder)
     {
@@ -54,6 +61,7 @@ class ArticleController extends Controller
               $article->setContenuBbcode($article->getContenu());
               $article->setContenu($bbcoder->bbcodeToHtml($article->getContenuBbcode()));
               $article->setDateCreation(new \DateTime());
+              $article->setDateModif(new \DateTime());
               $article->setUrl($slugger->genererSlug($article->getTitre()));
 
               $entityManager->persist($article);
@@ -66,6 +74,54 @@ class ArticleController extends Controller
 
           return $this->render('article/nouvelArticle.html.twig', [
             'form' => $form->createView(),
+          ]);
+        }
+        return $this->redirectToRoute('articles');
+    }
+
+    /**
+     * @Route("/articles/modifier/{slug}/", name="modifierArticle")
+     */
+    public function modifierArticle($slug, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user, Slugger $slugger, BBCoder $bbcoder)
+    {
+        if ($authChecker->isGranted('ROLE_ADMIN')) {
+
+          $article = $this->getDoctrine()->getRepository(Article::class)->findOneBy(["url" => $slug]);
+          $article->setContenu($article->getContenuBbcode());
+          $article->setMiniature(new File($this->getParameter('miniatures_directory').'/'.$article->getMiniature()));
+          $form = $this->createForm(ArticleType::class, $article);
+
+          $form->handleRequest($request);
+
+          if ($form->isSubmitted() && $form->isValid()) {
+              $entityManager = $this->getDoctrine()->getManager();
+
+              // upload miniature image
+              $image = $form->get("miniature")->getData();
+              $nomImage = md5(uniqid()).'.'.$image->guessExtension();
+              $image->move($this->getParameter('miniatures_directory'), $nomImage);
+              $article->setMiniature($nomImage);
+
+              // on insère les paramètres prédéfinis
+              $article->setContenuBbcode($article->getContenu());
+              $article->setContenu($bbcoder->bbcodeToHtml($article->getContenuBbcode()));
+              $article->setDateModif(new \DateTime());
+
+              $entityManager->persist($article);
+              $entityManager->flush();
+
+              return $this->redirectToRoute('voirArticle', [
+                  'url' => $article->getUrl()
+              ]);
+          }
+
+          if ($form->isSubmitted() && !$form->isValid()) {
+              $this->addFlash('error', $form->getErrors());
+          }
+
+          return $this->render('article/modifierArticle.html.twig', [
+            'form' => $form->createView(),
+            'article' => $article,
           ]);
         }
         return $this->redirectToRoute('articles');

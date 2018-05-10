@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Événements{% endblock %}
+
+{% block body %}
+    <h1>Événements à venir</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('evenement_new') }}" class="btn btn-danger my-2"><i class="fa fa-plus"></i> Nouvel événement</a>
+    {% endif %}
+    {% set i = 0 %}
+    {% for evenement in evenements %}
+        {% if evenement.roleMinimum == 'ROLE_USER' or ((evenement.roleMinimum == 'ROLE_PRIVE') and (is_granted('ROLE_PRIVE'))) %}
+            {{ include('evenement/_apercu.html.twig') }}
+            {% set i = i + 1 %}
+        {% endif %}
+    {% endfor %}
+    {% if i == 0 %}
+        <h4 class="my-5">Aucun événement à venir</h4>
+    {% endif %}
+
+{% endblock %}

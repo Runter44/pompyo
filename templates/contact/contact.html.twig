@@ -15,7 +15,7 @@
     <p>Nous vous rappellons que toutes les données envoyées resteront internes au CIS et ne seront transmises à
         personne.</p>
     <h4 class="my-4">Formulaire de contact</h4>
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'onsubmit': 'return confirm("Envoyer le message ?");'}}) }}
         <div class="form-row">
             <div class="form-group col">
                 {{ form_row(form.prenom) }}

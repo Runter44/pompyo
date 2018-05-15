@@ -1,0 +1,215 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le centre{% endblock %}
+
+{% block body %}
+    <h1>&Agrave; propos du Centre</h1>
+    <ul class="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-personnel-tab" data-toggle="pill" href="#pills-personnel" role="tab"
+               aria-controls="pills-personnel" aria-selected="true">Le personnel</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-armement-tab" data-toggle="pill" href="#pills-armement" role="tab"
+               aria-controls="pills-armement" aria-selected="false">L'armement</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-jsp-tab" data-toggle="pill" href="#pills-jsp" role="tab"
+               aria-controls="pills-jsp" aria-selected="false">Les Jeunes Sapeurs-Pompiers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-histoire-tab" data-toggle="pill" href="#pills-histoire" role="tab"
+               aria-controls="pills-histoire" aria-selected="false">L'histoire du centre</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-personnel" role="tabpanel"
+             aria-labelledby="pills-personnel-tab">
+            <h4>Le personnel actif du centre</h4>
+            <div class="row">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Équipe 1</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                Michel ROUSSEAU<br>
+                                <small>Chef de garde</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Laurent CALVEZ<br>
+                                <small>Chef de garde adjoint</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sébastien MARTELLY</td>
+                        </tr>
+                        <tr>
+                            <td>Jérémy MENORET</td>
+                        </tr>
+                        <tr>
+                            <td>Emeric BREAL</td>
+                        </tr>
+                        <tr>
+                            <td>Stéphane CHASSERIO</td>
+                        </tr>
+                        <tr>
+                            <td>Antoine DURASSIER</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Équipe 2</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                Olivier MOQUART<br>
+                                <small>Chef de garde</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Pascal MISSONNIER<br>
+                                <small>Chef de garde adjoint</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Anthony BATARD</td>
+                        </tr>
+                        <tr>
+                            <td>Marie DERRIENNIC</td>
+                        </tr>
+                        <tr>
+                            <td>Arnaud JOLLY</td>
+                        </tr>
+                        <tr>
+                            <td>Eliott ROMIEN</td>
+                        </tr>
+                        <tr>
+                            <td>Simon JAUNET</td>
+                        </tr>
+                        <tr>
+                            <td>Céline DELHOUMEAU</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Équipe 3</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                Didier MENORET<br>
+                                <small>Chef de garde</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Pascal MAISONNEUVE<br>
+                                <small>Chef de garde adjoint</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Franck GERGAUD</td>
+                        </tr>
+                        <tr>
+                            <td>Mickaël LEBRUMAN</td>
+                        </tr>
+                        <tr>
+                            <td>Nadège DAVIAUD</td>
+                        </tr>
+                        <tr>
+                            <td>Matthieu SOIN</td>
+                        </tr>
+                        <tr>
+                            <td>Marc LOUIS</td>
+                        </tr>
+                        <tr>
+                            <td>Mathéo HUGUET</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Équipe 4</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                Jean-Christophe GLOMET<br>
+                                <small>Chef de garde</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Sylvain GOGNAU<br>
+                                <small>Chef de garde adjoint</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Marc GEMEHL</td>
+                        </tr>
+                        <tr>
+                            <td>Régis MOREAU</td>
+                        </tr>
+                        <tr>
+                            <td>Julien PETIT</td>
+                        </tr>
+                        <tr>
+                            <td>Farid DECOCQ</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Sébastien ROMIEN<br>
+                                <small>Chef de centre</small>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p>
+            <span class="d-inline-block align-middle mr-3">
+                Non affecté aux équipes
+            </span>
+            <span class="d-inline-block align-middle">
+                Cédric CEREZ<br>
+                <small>Infirmier</small>
+            </span>
+            </p>
+            <h4>Le personnel non actif</h4>
+
+            <h4>Les anciens du centre</h4>
+        </div>
+        <div class="tab-pane fade" id="pills-armement" role="tabpanel" aria-labelledby="pills-armement-tab">
+            Armement
+        </div>
+        <div class="tab-pane fade" id="pills-jsp" role="tabpanel" aria-labelledby="pills-jsp-tab">
+            JSP
+        </div>
+        <div class="tab-pane fade" id="pills-histoire" role="tabpanel" aria-labelledby="pills-histoire-tab">
+            Histoire
+        </div>
+    </div>
+{% endblock %}

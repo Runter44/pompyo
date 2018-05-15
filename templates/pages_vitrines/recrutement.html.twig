@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recrutement{% endblock %}
+
+{% block body %}
+    <h1>Nous rejoindre</h1>
+    <p>Le CIS Saint Julien de Concelles recherche continuellement de nouvelles personnes souhaitant s'investir dans
+        l'activité de Sapeur-Pompier Volontaire ! Retrouvez ici toutes les informations concernant le volontariat, les
+        critères de recrutement, des questions fréquemment posées, ainsi que le déroulé de votre intégration au CIS
+        Saint Julien de Concelles et au SDIS 44 ! Vous pouvez déjà
+        <a href="http://www.sdis44.fr/images/devenir-volontaire/Plaquette-volontariat.pdf" target="_blank">
+            télécharger la plaquette d'information du SDIS 44</a> !</p>
+    <p><b><em>EXPLIQUER EN QUOI CONSISTE D'ÊTRE VOLONTAIRE ET PAS PRO</em></b></p>
+    <h2>Qui contacter ?</h2>
+    <p>Si vous êtes intéressé(e) par l'activité de Sapeur-Pompier Volontaire, vous pouvez contacter Sébastien Romien,
+        chef de centre du CIS Saint Julien de Concelles au 06 07 14 74 10 pour plus de renseignements. Vous pouvez
+        également utiliser le <a href="{{ path('contact') }}">formulaire de contact</a>, nous vous répondrons dans les
+        plus brefs délais.</p>
+    <p>N'hésitez pas à venir à notre rencontre tous les lundis soirs à 19h au CIS Saint Julien de Concelles, situé au
+        17 rue de Basse Rivière !</p>
+
+    <img src="{{ asset('images/bannieres/banniere1.png') }}" alt="Bannière" class="img-fluid my-3">
+
+    <h2>Les critères de recrutement</h2>
+
+    <div class="question">
+        <div class="question-image d-inline-block">1</div> Vous avez plus de 16 ans
+    </div>
+    <p>Cela ne veut pas dire qu'il faut être jeune : vous pouvez tout à fait entrer en tant que SPV à plus de
+        45 voire 50 ans ! Cependant, il vous faudra être majeur pour pouvoir partir en intervention, mais pas de
+        panique, vous serez intégré à la vie de la caserne comme tous les pompiers !</p>
+
+    <div class="question">
+        <div class="question-image d-inline-block">2</div> Vous résidez à moins de 5 minutes du CIS Saint Julien de
+        Concelles
+    </div>
+    <p>Les Sapeurs-Pompiers Volontaires se doivent d'assurer un départ du véhicule d'intervention en moins de 8 minutes.
+        Pour pouvoir assurer ce délai, il vous faut donc résider assez près du CIS.</p>
+
+    <div class="question">
+        <div class="question-image d-inline-block">3</div> Vous avez des disponibilités
+    </div>
+    <p>Au CIS Saint Julien de Concelles, vous serez affecté à une équipe, et vous devrez assurer une semaine de garde
+        tous les mois, avec une man&oelig;uvre le dimanche matin. Vous devrez aussi pouvoir assurer vos 30 jours de
+        formation initiale et autres formations. Pour plus d'informations, consultez la section des idées reçues.</p>
+
+    <div class="question">
+        <div class="question-image d-inline-block">4</div> Vous avez une bonne condition physique
+    </div>
+    <p>Nul besoin d'être Schwarzenegger, il vous faut simplement répondre aux conditions d'aptitude physiques,
+        sportives et médicales du SDIS 44, listées dans la plaquette d'information (le vaccin contre l'hépatite B est
+        obligatoire).</p>
+
+    <img src="{{ asset('images/bannieres/banniere6.png') }}" alt="Bannière" class="img-fluid my-3">
+
+    <h2>Idées reçues</h2>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">1</div>
+        Il faut absolument être très sportif et mesurer 1,80m.
+    </div>
+    <p><span class="text-uppercase text-danger font-weight-bold mr-2">Faux</span>Il n'y a absolument aucune
+        obligation à être très bon en sport. Vous devez simplement entretenir votre condition physique de façon à
+        pouvoir tenir le rythme tout au long des interventions, et passer le palier minimal requis au test du Luc Léger.
+        De plus, il n'y a pas de taille minimale requise. Le plus important, c'est bel et bien la motivation d'aider
+        les autres.</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">2</div>
+        Après 40 ans, cela ne sert à rien d'intégrer une caserne
+    </div>
+    <p><span class="text-uppercase text-danger font-weight-bold mr-2">Faux</span>Il n'est jamais trop tard : tant que
+        vous n'avez pas 55 ans, vous pouvez aspirer à devenir Sapeur-Pompier. Cela ne pose absolument aucun problème, et
+        cela vous offira une expérience certainement très enrichissante et inoubliable !</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">3</div>
+        En tant que pompier, on passe toutes nos vacances à se former
+    </div>
+    <p><span class="text-uppercase text-danger font-weight-bold mr-2">Faux</span>Certes, vous aurez probablement à
+        planifier des formations durant vos vacances, mais rien ne vous empêche de vous arranger avec votre employeur.
+        Sachez aussi que les formations ne sont pas très nombreuses : 30 jours à répartir à votre guise sur plusieurs
+    années pour la formation initiale, et entre 5 et 10 jours si vous souhaitez monter en grade.</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">4</div>
+        Les interventions sont parfois difficiles à vivre
+    </div>
+    <p><span class="text-uppercase text-success font-weight-bold mr-2">Vrai</span>Certaines interventions dramatiques
+        restent gravées dans les mémoires. Même si elles ne sont pas très nombreuses, cela fait aussi partie du métier.
+        Malgré tout, nous passons beaucoup plus de bons, voire très bons moments, que ce soit sur intervention ou non.</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">5</div>
+        Ils prennent peu de femmes chez les pompiers
+    </div>
+    <p><span class="text-uppercase text-danger font-weight-bold mr-2">Faux</span>Complètement faux. Au contraire, nous
+        recherchons beaucoup de femmes afin de renforcer nos rangs et assurer une parité.</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">6</div>
+        L'activité de pompier est peu compatible avec une vie de famille ou étudiante
+    </div>
+    <p><span class="text-uppercase text-danger font-weight-bold mr-2">Faux</span>Beaucoup de nos pompiers ont également
+        une vie familiale ou étudiante active en parallèle de leur activité professionnelle et de pompier. Vous avez
+        bien sûr la liberté d'aménager vos horaires de garde en fonction de vos contraintes familiales ou étudiantes.</p>
+
+    <img src="{{ asset('images/bannieres/banniere7.png') }}" alt="Bannière" class="img-fluid my-3">
+
+    <h2>Questions fréquentes</h2>
+
+    <ol>
+        <li>aménager gardes et travail
+            <ol>
+                <li>comment faire les gardes vu que je travaille</li>
+                <li>je travaille trop loin</li>
+                <li>contraintes perso (examens, gosses...)</li>
+            </ol>
+        </li>
+        <li>missions pompiers</li>
+        <li>déroulement intégration st julien</li>
+        <li>et en chercher d'autres</li>
+    </ol>
+    <p>...</p>
+{% endblock %}

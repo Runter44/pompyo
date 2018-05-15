@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -92,6 +94,16 @@ class Evenement
      * @ORM\Column(type="string", length=255)
      */
     private $roleMinimum;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\InscriptionEvenement", mappedBy="evenement")
+     */
+    private $inscriptionEvenements;
+
+    public function __construct()
+    {
+        $this->inscriptionEvenements = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -226,6 +238,37 @@ class Evenement
     public function setRoleMinimum(string $roleMinimum): self
     {
         $this->roleMinimum = $roleMinimum;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InscriptionEvenement[]
+     */
+    public function getInscriptionEvenements(): Collection
+    {
+        return $this->inscriptionEvenements;
+    }
+
+    public function addInscriptionEvenement(InscriptionEvenement $inscriptionEvenement): self
+    {
+        if (!$this->inscriptionEvenements->contains($inscriptionEvenement)) {
+            $this->inscriptionEvenements[] = $inscriptionEvenement;
+            $inscriptionEvenement->setEvenement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscriptionEvenement(InscriptionEvenement $inscriptionEvenement): self
+    {
+        if ($this->inscriptionEvenements->contains($inscriptionEvenement)) {
+            $this->inscriptionEvenements->removeElement($inscriptionEvenement);
+            // set the owning side to null (unless already changed)
+            if ($inscriptionEvenement->getEvenement() === $this) {
+                $inscriptionEvenement->setEvenement(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Événements{% endblock %}
+
+{% block body %}
+    <h1>Liste des inscrits à {{ evenement.nom }}</h1>
+
+    {% if date(evenement.dateDebut) < date() %}
+        <h4>Cet événement a déjà eu lieu !</h4>
+    {% endif %}
+
+    <h4 class="my-5">Au total, {{ evenement|nb_participants_total }} personnes sont inscrites, dont
+        {{ evenement|nb_participants_adultes }} adultes et {{ evenement|nb_participants_enfants }} enfants.
+    </h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom de la personne</th>
+            <th>Nombre d'adultes</th>
+            <th>Nombre d'enfants</th>
+            <th>Commentaires</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for inscription in evenement.inscriptionEvenements %}
+            <tr>
+                <td>{{ inscription.utilisateur.prenom }} {{ inscription.utilisateur.nom }}</td>
+                <td>{{ inscription.nbAdultes }}</td>
+                <td>{{ inscription.nbEnfants }}</td>
+                <td>{{ inscription.commentaires }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

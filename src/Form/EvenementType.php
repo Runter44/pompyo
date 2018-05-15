@@ -77,6 +77,7 @@ class EvenementType extends AbstractType
             ))
             ->add('visiblePublic', CheckboxType::class, array(
                 'label' => 'Cet événement est public',
+                'required' => false,
             ))
             ->add('dateDebut', DateType::class, array(
                 'widget' => 'single_text',

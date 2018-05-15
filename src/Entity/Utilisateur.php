@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,17 +51,32 @@ class Utilisateur implements UserInterface, \Serializable
     private $nom;
 
     /**
-     * @ORM\Column(type="date")
-     *
-     * @Assert\Date(message="La date de naissance est invalide")
-     * @Assert\NotBlank(message="La date de naissance est invalide")
+     * @ORM\Column(type="datetime")
      */
-    private $dateDeNaissance;
+    private $dateInscription;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
     private $role;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\InscriptionEvenement", mappedBy="utilisateur")
+     */
+    private $inscriptionEvenements;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\Length(max=255, maxMessage="La commune est trop longue")
+     * @Assert\NotBlank(message="La commune est invalide")
+     */
+    private $commune;
+
+    public function __construct()
+    {
+        $this->inscriptionEvenements = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -114,14 +131,14 @@ class Utilisateur implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getDateDeNaissance(): ?\DateTimeInterface
+    public function getDateInscription(): ?\DateTimeInterface
     {
-        return $this->dateDeNaissance;
+        return $this->dateInscription;
     }
 
-    public function setDateDeNaissance(\DateTimeInterface $dateDeNaissance): self
+    public function setDateInscription(\DateTimeInterface $dateInscription): self
     {
-        $this->dateDeNaissance = $dateDeNaissance;
+        $this->dateInscription = $dateInscription;
 
         return $this;
     }
@@ -173,5 +190,48 @@ class Utilisateur implements UserInterface, \Serializable
             $this->email,
             $this->password,
         ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    /**
+     * @return Collection|InscriptionEvenement[]
+     */
+    public function getInscriptionEvenements(): Collection
+    {
+        return $this->inscriptionEvenements;
+    }
+
+    public function addInscriptionEvenement(InscriptionEvenement $inscriptionEvenement): self
+    {
+        if (!$this->inscriptionEvenements->contains($inscriptionEvenement)) {
+            $this->inscriptionEvenements[] = $inscriptionEvenement;
+            $inscriptionEvenement->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscriptionEvenement(InscriptionEvenement $inscriptionEvenement): self
+    {
+        if ($this->inscriptionEvenements->contains($inscriptionEvenement)) {
+            $this->inscriptionEvenements->removeElement($inscriptionEvenement);
+            // set the owning side to null (unless already changed)
+            if ($inscriptionEvenement->getUtilisateur() === $this) {
+                $inscriptionEvenement->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCommune(): ?string
+    {
+        return $this->commune;
+    }
+
+    public function setCommune(string $commune): self
+    {
+        $this->commune = $commune;
+
+        return $this;
     }
 }

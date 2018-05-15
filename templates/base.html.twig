@@ -51,16 +51,15 @@
             <a href="{{ path('accueil') }}" class="lienMenu p-2">Accueil</a>
             <a href="{{ path('articles') }}" class="lienMenu p-2">Actualité</a>
             <a href="{{ path('evenement_index') }}" class="lienMenu p-2">&Eacute;vénements</a>
-            <a href="#" class="lienMenu p-2">Conseils & prévention</a>
-            <a href="#" class="lienMenu p-2">Recrutement</a>
-            <a href="#" class="lienMenu p-2">Le centre</a>
+            <a href="{{ path('recrutement') }}" class="lienMenu p-2">Nous rejoindre</a>
+            <a href="{{ path('leCentre') }}" class="lienMenu p-2">Le centre</a>
             <a href="{{ path('contact') }}" class="lienMenu p-2">Contact</a>
         </div>
     </div>
 </div>
 
 <div class="container-fluid bg-white contenu">
-    <div class="container py-4">
+    <div class="container py-4 containerPrincipal">
         {% block body %}{% endblock %}
     </div>
 </div>
@@ -87,10 +86,10 @@
     <div class="container">
         <div class="row text-center py-3">
             <div class="col-12 col-md-6">
-                <h5 class="text-uppercase font-weight-bold">Recrutement</h5>
+                <h5 class="text-uppercase font-weight-bold">Nous rejoindre</h5>
                 <p>Nous recherchons continuellement des Sapeurs-Pompiers Volontaires entre 16
-                    et 60 ans pour renforcer leurs rangs&nbsp;!</p>
-                <a href="#" class="lienRecrutementCIS">
+                    et 60 ans pour renforcer nos rangs&nbsp;!</p>
+                <a href="{{ path('recrutement') }}" class="lienRecrutementCIS">
                     <div class="recrutementCIS">
                         Plus d'informations
                     </div>
@@ -113,7 +112,7 @@
     <div class="container py-3">
         <div class="row text-center">
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="#" class="col text-white">
+                <a href="{{ path('administration') }}" class="col text-white">
                     Administration
                 </a>
             {% endif %}

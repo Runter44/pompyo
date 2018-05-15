@@ -60,6 +60,18 @@ input[type="text"]:focus {
     color: #0066b3;
 }
 
+.text-20 {
+    font-size: 20px;
+}
+
+.containerPrincipal {
+    min-height: 600px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #dc3545;
+}
+
 a {
     color: #dc3545;
 }
@@ -156,4 +168,21 @@ textarea {
 .petitBadge {
     display: inline-block;
     margin-top: -10px;
+}
+
+/*RECRUTEMENT*/
+.question {
+    font-size: 18px;
+    color: #0066b3;
+}
+
+.question .question-image {
+    background-size: contain;
+    background: url("../images/question.png") center;
+    height: 23px;
+    width: 29px;
+    font-size: 14px;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
 }

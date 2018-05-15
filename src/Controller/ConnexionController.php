@@ -78,6 +78,7 @@ class ConnexionController extends Controller
                 $password = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
                 $utilisateur->setPassword($password);
                 $utilisateur->setRole("ROLE_USER");
+                $utilisateur->setDateInscription(new \DateTime('now', new \DateTimeZone("Europe/Paris")));
 
                 $entityManager->persist($utilisateur);
                 $entityManager->flush();

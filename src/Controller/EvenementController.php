@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\InscriptionEvenement;
 use App\Form\EvenementType;
+use App\Form\InscriptionEvenementType;
 use App\Repository\EvenementRepository;
 use App\Utils\Slugger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -53,6 +56,8 @@ class EvenementController extends Controller
 
             if ($evenement->getInscriptionPossible() === false) {
                 $evenement->setDateLimiteInscription(null);
+            } elseif ($evenement->getInscriptionPossible() === true && $evenement->getDateLimiteInscription() === null) {
+                $evenement->setDateLimiteInscription($evenement->getDateDebut());
             }
 
             if ($evenement->getDateLimiteInscription() != null && ($evenement->getDateLimiteInscription() > $evenement->getDateDebut())) {
@@ -73,17 +78,60 @@ class EvenementController extends Controller
     }
 
     /**
-     * @Route("/{slug}/", name="evenement_show", methods="GET")
+     * @Route("/{slug}/", name="evenement_show", methods="GET|POST")
      *
      * @param Evenement $evenement
+     * @param Request $request
      * @return Response
      */
-    public function show(Evenement $evenement): Response
+    public function show(Evenement $evenement, Request $request): Response
     {
         if ($evenement->getRoleMinimum() === 'ROLE_PRIVE') {
             $this->denyAccessUnlessGranted('ROLE_PRIVE');
         }
-        return $this->render('evenement/show.html.twig', ['evenement' => $evenement]);
+
+        $inscriptionEvenement = $this->getDoctrine()->getRepository(InscriptionEvenement::class)->findOneBy([
+            "evenement" => $evenement,
+            "utilisateur" => $this->getUser(),
+        ]);
+
+        if ($inscriptionEvenement == null) {
+            $inscriptionEvenement = new InscriptionEvenement();
+        }
+
+        $inscriptionEvenementForm = $this->createForm(InscriptionEvenementType::class, $inscriptionEvenement);
+
+        $inscriptionEvenementForm->handleRequest($request);
+
+        if ($inscriptionEvenementForm->isSubmitted() && $inscriptionEvenementForm->isValid()) {
+            $inscriptionEvenement->setUtilisateur($this->getUser());
+            $inscriptionEvenement->setEvenement($evenement);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($inscriptionEvenement);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre inscription a bien été prise en compte.');
+
+            return $this->redirectToRoute('evenement_show', ["slug" => $evenement->getSlug()]);
+        }
+
+        return $this->render('evenement/show.html.twig', ['evenement' => $evenement, 'form' => $inscriptionEvenementForm->createView(), 'inscription' => $inscriptionEvenement]);
+    }
+
+    /**
+     * @Route("/{slug}/participants/", name="evenement_participants", methods="GET|POST")
+     *
+     * @param Evenement $evenement
+     * @return Response
+     */
+    public function participants(Evenement $evenement)
+    {
+        if ($evenement->getInscriptionPossible() === false) {
+            throw new NotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        return $this->render('evenement/participants.html.twig', ['evenement' => $evenement]);
     }
 
     /**
@@ -108,6 +156,16 @@ class EvenementController extends Controller
                 $evenement->setRoleMinimum('ROLE_USER');
             }
             $evenement->setSlug($slugger->genererSlug($evenement->getNom()));
+
+            if ($evenement->getInscriptionPossible() === false) {
+                $evenement->setDateLimiteInscription(null);
+            } elseif ($evenement->getInscriptionPossible() === true && $evenement->getDateLimiteInscription() === null) {
+                $evenement->setDateLimiteInscription($evenement->getDateDebut());
+            }
+
+            if ($evenement->getDateLimiteInscription() != null && ($evenement->getDateLimiteInscription() > $evenement->getDateDebut())) {
+                $evenement->setDateLimiteInscription($evenement->getDateDebut());
+            }
 
             $this->getDoctrine()->getManager()->flush();
 

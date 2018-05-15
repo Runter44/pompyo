@@ -67,16 +67,13 @@ class UtilisateurType extends AbstractType
                 'autocomplete' => 'family-name',
               ),
             ))
-            ->add('dateDeNaissance', BirthdayType::class, array(
-              'widget' => 'single_text',
-              'input' => 'datetime',
-              'label' => 'Date de naissance',
-              'attr' => array(
-                'class' => 'form-control',
-                'min' => '1900-01-01',
-                'max' => (new \DateTime())->format("Y-m-d"),
-                'autocomplete' => 'bday',
-              ),
+            ->add('commune', TextType::class, array(
+                'label' => 'Commune de résidence',
+                'attr' => array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez votre commune de résidence',
+                    'maxlength' => '255',
+                ),
             ))
         ;
     }

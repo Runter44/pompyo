@@ -145,14 +145,18 @@ textarea {
 
 /*EVENEMENTS*/
 
+.blocEvenement:hover {
+    cursor: pointer;
+    transition: 200ms;
+}
+
+.blocEvenement:hover .titreEvenement {
+    color: #9f1c29;
+}
+
 .titreEvenement {
     font-size: 28px;
     display: inline-block;
-}
-
-.titreEvenement a:hover {
-    text-decoration: none;
-    transition: 200ms;
 }
 
 .dateEvenement {

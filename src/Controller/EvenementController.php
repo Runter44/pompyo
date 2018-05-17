@@ -188,12 +188,42 @@ class EvenementController extends Controller
     public function delete(Request $request, Evenement $evenement): Response
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
-        if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $evenement->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
+
+            foreach ($evenement->getInscriptionEvenements() as $inscriptionEvenement) {
+                $em->remove($inscriptionEvenement);
+            }
+
             $em->remove($evenement);
             $em->flush();
         }
 
         return $this->redirectToRoute('evenement_index');
+    }
+
+    /**
+     * @Route("/{slug}/supprimer_inscription", name="inscription_evenement_delete", methods="DELETE")
+     *
+     * @param Request $request
+     * @param Evenement $evenement
+     * @return Response
+     */
+    public function deleteInscription(Request $request, Evenement $evenement): Response
+    {
+        $this->denyAccessUnlessGranted("ROLE_USER");
+        if ($this->isCsrfTokenValid('delete' . $evenement->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+
+            $inscription = $em->getRepository(InscriptionEvenement::class)->findOneBy([
+                "utilisateur" => $this->getUser(),
+                "evenement" => $evenement
+            ]);
+
+            $em->remove($inscription);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('evenement_show', ["slug" => $evenement->getSlug()]);
     }
 }

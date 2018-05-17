@@ -34,9 +34,18 @@
             {{ evenement.lieu }}
         </p>
         {% if evenement.roleMinimum == 'ROLE_PRIVE' %}
-        <span class="badge badge-info">Événement privé</span>
+        <span class="badge badge-danger">Événement privé</span>
         {% endif %}<br>
     </div>
+
+    {% if is_granted('ROLE_USER') %}
+        {% if inscription.nbAdultes > 0 %}
+            <p class="text-success mb-3">Vous êtes inscrit à cet événement pour <b>{{ inscription.nbAdultes }}</b>
+                adultes et <b>{{ inscription.nbEnfants }}</b> enfants.</p>
+        {% else %}
+            <p class="mb-3 text-danger">Vous n'êtes pas inscrit à cet événement.</p>
+        {% endif %}
+    {% endif %}
 
     <div class="pb-4 font-italic">
         {{ evenement.teaser|nl2br }}
@@ -49,18 +58,11 @@
     {% if is_granted('ROLE_USER') and evenement.inscriptionPossible == true %}
         <h2 class="my-4">Inscription à l'événement {{ evenement.nom }}</h2>
         {% if date(evenement.dateLimiteInscription) >= date() %}
-            <h4>Vous avez jusqu'au
+            <p class="text-20 text-bleu">Vous avez jusqu'au
                 {{ evenement.dateLimiteInscription ? evenement.dateLimiteInscription|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") : evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") }}
                 pour vous inscrire ou modifier votre inscription.
-            </h4>
-            {% if inscription.nbAdultes > 0 %}
-                <p class="my-3">
-                    <b>Vous êtes déjà inscrit à cet événement pour {{ inscription.nbAdultes }} adultes
-                        et {{ inscription.nbEnfants }} enfants.</b>
-                    Vous pouvez toujours modifier votre inscription via le formulaire.
-                </p>
-            {% endif %}
-            {{ form_start(form) }}
+            </p>
+            {{ form_start(form, {'attr': {'id': 'formInscriptionEvenement'}}) }}
             <div class="row">
                 <div class="col">
                     {{ form_row(form.nbAdultes) }}
@@ -70,27 +72,33 @@
                 </div>
             </div>
             {{ form_row(form.commentaires) }}
-            {% if inscription.nbAdultes > 0 %}
-                <input type="submit" class="btn btn-danger d-block mx-auto" value="Modifier l'inscription">
-            {% else %}
-                <input type="submit" class="btn btn-danger d-block mx-auto" value="Valider l'inscription">
-            {% endif %}
             {{ form_end(form) }}
+            <div class="d-block mx-auto">
+                {% if inscription.nbAdultes > 0 %}
+                    <button onclick="document.getElementById('formInscriptionEvenement').submit()"
+                            class="btn btn-danger">
+                        Modifier l'inscription
+                    </button>
+                    {% if inscription.nbAdultes > 0 %}
+                        {{ include('evenement/_delete_inscription_form.html.twig') }}
+                    {% endif %}
+                {% else %}
+                    <button onclick="document.getElementById('formInscriptionEvenement').submit()"
+                            class="btn btn-danger">
+                        Valider l'inscription
+                    </button>
+                {% endif %}
+            </div>
         {% else %}
-            <h4>Les inscriptions sont terminées depuis le
+            <p class="text-20 text-bleu">Les inscriptions sont terminées. Vous aviez jusqu'au
                 {{ evenement.dateLimiteInscription ? evenement.dateLimiteInscription|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") : evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") }}
-                .
-            </h4>
-            {% if inscription.nbAdultes > 0 %}
-                <p>Vous êtes inscrits pour {{ inscription.nbAdultes }} adultes et {{ inscription.nbEnfants }}
-                    enfants.</p><p>Commentaires :<br>{{ inscription.commentaires }}</p>
-            {% else %}
-                <p>Vous n'êtes pas inscrit à cet événement.</p>
-            {% endif %}
+                pour vous inscrire.<br>
+                <small>Vous ne pouvez plus vous inscrire ou modifier votre inscription.</small>
+            </p>
         {% endif %}
     {% elseif evenement.inscriptionPossible == true and is_granted('ROLE_USER') == false %}
         <h2 class="my-4">Inscription à l'événement {{ evenement.nom }}</h2>
-        <h4>Veuillez vous connecter pour pouvoir vous inscrire</h4>
+        <p class="text-20 text-bleu">Veuillez vous connecter pour pouvoir vous inscrire.</p>
     {% endif %}
 
 {% endblock %}

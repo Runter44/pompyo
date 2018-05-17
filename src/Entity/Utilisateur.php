@@ -200,6 +200,18 @@ class Utilisateur implements UserInterface, \Serializable
         return $this->inscriptionEvenements;
     }
 
+    /**
+     * @return Collection|Evenement[]
+     */
+    public function getEvenementsInscrit()
+    {
+        $evenements = array();
+        foreach ($this->inscriptionEvenements as $inscriptionEvenement) {
+            array_push($evenements, $inscriptionEvenement->getEvenement());
+        }
+        return $evenements;
+    }
+
     public function addInscriptionEvenement(InscriptionEvenement $inscriptionEvenement): self
     {
         if (!$this->inscriptionEvenements->contains($inscriptionEvenement)) {

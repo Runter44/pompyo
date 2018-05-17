@@ -1,6 +1,6 @@
-<div class="border-bottom border-danger py-3 blocEvenement">
-    <h2 class="titreEvenement"><a href="{{ path('evenement_show', {"slug": evenement.slug}) }}">{{ evenement.nom }}</a>
-    </h2><br>
+<div class="border-bottom border-danger py-3 blocEvenement"
+     onclick="window.location = '{{ path('evenement_show', {"slug": evenement.slug}) }}'">
+    <h2 class="titreEvenement">{{ evenement.nom }}</h2><br>
 
     <p class="dateEvenement d-inline mr-3">
         <i class="far fa-clock"></i>
@@ -11,21 +11,30 @@
     <p class="villeEvenement d-inline mr-3"><i class="far fa-building"></i> {{ evenement.lieu }}</p>
 
     {% if evenement.roleMinimum == 'ROLE_PRIVE' %}
-        <span class="badge badge-info petitBadge">Événement privé</span>
+        <span class="badge badge-danger petitBadge">Événement privé</span>
     {% endif %}
 
-    <p class="my-2 text-justify">{{ evenement.teaser|nl2br }}</p>
+    <p class="my-2 text-justify text-dark">{{ evenement.teaser|nl2br }}</p>
 
-    <a href="{{ path('evenement_show', {"slug": evenement.slug}) }}" class="btn btn-sm btn-danger">
-        <i class="fa fa-search-plus"></i>
-        Détails{% if evenement.inscriptionPossible == true %} et inscriptions{% endif %}
-    </a>
-
-    {% if is_granted('ROLE_ADMIN') and evenement.inscriptionPossible == true %}
-        <a href="{{ path('evenement_participants', {'slug': evenement.slug}) }}" class="btn btn-sm btn-danger">
-            <i class="fa fa-users"></i>
-            Voir la liste des participants
-        </a>
+    {% if evenement.inscriptionPossible == true %}
+        <p class="text-bleu mb-2">
+            {% if date(evenement.dateLimiteInscription) >= date() %}
+                Vous avez jusqu'au
+                {{ evenement.dateLimiteInscription ? evenement.dateLimiteInscription|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") : evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") }}
+                pour vous inscrire ou modifier votre inscription.
+            {% else %}
+                Les inscriptions se sont terminées le
+                {{ evenement.dateLimiteInscription ? evenement.dateLimiteInscription|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") : evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") }}.
+            {% endif %}
+            {% if app.user != null and evenement in app.user.evenementsInscrit %}
+                <span class="badge badge-success">Vous êtes inscrit à cet événement</span>
+            {% endif %}
+        </p>
     {% endif %}
+
+    {#<a href="{{ path('evenement_show', {"slug": evenement.slug}) }}" class="btn btn-sm btn-danger">#}
+    {#<i class="fa fa-search-plus"></i>#}
+    {#Détails{% if evenement.inscriptionPossible == true %} et inscriptions{% endif %}#}
+    {#</a>#}
 
 </div>

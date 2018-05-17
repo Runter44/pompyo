@@ -1,18 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recrutement{% endblock %}
+{% block title %}Nous rejoindre{% endblock %}
 
 {% block body %}
     <h1>Nous rejoindre</h1>
     <p>Le CIS Saint Julien de Concelles recherche continuellement de nouvelles personnes souhaitant s'investir dans
-        l'activité de Sapeur-Pompier Volontaire ! Retrouvez ici toutes les informations concernant le volontariat, les
+        l'activité de Sapeur-Pompier Volontaire (SPV) ! Retrouvez ici toutes les informations concernant le volontariat, les
         critères de recrutement, des questions fréquemment posées, ainsi que le déroulé de votre intégration au CIS
         Saint Julien de Concelles et au SDIS 44 ! Vous pouvez déjà
         <a href="http://www.sdis44.fr/images/devenir-volontaire/Plaquette-volontariat.pdf" target="_blank">
-            télécharger la plaquette d'information du SDIS 44</a> !</p>
-    <p><b><em>EXPLIQUER EN QUOI CONSISTE D'ÊTRE VOLONTAIRE ET PAS PRO</em></b></p>
+            <i class="fa fa-download"></i> télécharger la plaquette d'information du SDIS 44</a> !</p>
+    <p>Sur cette page, vous trouverez beaucoup d'informations concernant les pompiers volontaires. Si vous avez des
+        questions supplémentaires, n'hésitez pas à <a href="{{ path('contact') }}">nous contacter</a>, nous vous
+        répondrons dans les plus brefs délais !</p>
+
+    <h4>C'est quoi un pompier volontaire ?</h4>
+    <p>En France, 80% des pompiers sont volontaires. Les pompiers volontaires ont un métier comme les autres : de
+        mécanicien à infirmier, en passant par informaticien ou étudiant. En plus de leur activité professionnelle ou
+        étudiante, les pompiers volontaires investissent une partie de leur temps libre pour porter secours à la
+        population. Comme beaucoup de casernes, le CIS Saint Julien de Concelles est entièrement constitué de
+        volontaires.</p>
     <h2>Qui contacter ?</h2>
-    <p>Si vous êtes intéressé(e) par l'activité de Sapeur-Pompier Volontaire, vous pouvez contacter Sébastien Romien,
+    <p>Si vous êtes intéressé par l'activité de Sapeur-Pompier Volontaire, vous pouvez contacter Sébastien Romien,
         chef de centre du CIS Saint Julien de Concelles au 06 07 14 74 10 pour plus de renseignements. Vous pouvez
         également utiliser le <a href="{{ path('contact') }}">formulaire de contact</a>, nous vous répondrons dans les
         plus brefs délais.</p>
@@ -42,7 +51,8 @@
     </div>
     <p>Au CIS Saint Julien de Concelles, vous serez affecté à une équipe, et vous devrez assurer une semaine de garde
         tous les mois, avec une man&oelig;uvre le dimanche matin. Vous devrez aussi pouvoir assurer vos 30 jours de
-        formation initiale et autres formations. Pour plus d'informations, consultez la section des idées reçues.</p>
+        formation initiale et autres formations. Pour plus d'informations, consultez la section des idées reçues et des
+        questions fréquentes.</p>
 
     <div class="question">
         <div class="question-image d-inline-block">4</div> Vous avez une bonne condition physique
@@ -79,23 +89,23 @@
     </div>
     <p><span class="text-uppercase text-danger font-weight-bold mr-2">Faux</span>Certes, vous aurez probablement à
         planifier des formations durant vos vacances, mais rien ne vous empêche de vous arranger avec votre employeur.
-        Sachez aussi que les formations ne sont pas très nombreuses : 30 jours à répartir à votre guise sur plusieurs
+        Sachez aussi que les formations sont peu nombreuses : 30 jours à répartir à votre guise sur plusieurs
     années pour la formation initiale, et entre 5 et 10 jours si vous souhaitez monter en grade.</p>
 
     <div class="question text-20 mb-2">
         <div class="question-image d-inline-block">4</div>
         Les interventions sont parfois difficiles à vivre
     </div>
-    <p><span class="text-uppercase text-success font-weight-bold mr-2">Vrai</span>Certaines interventions dramatiques
+    <p><span class="text-uppercase text-success font-weight-bold mr-2">Vrai</span>Certaines interventions
         restent gravées dans les mémoires. Même si elles ne sont pas très nombreuses, cela fait aussi partie du métier.
         Malgré tout, nous passons beaucoup plus de bons, voire très bons moments, que ce soit sur intervention ou non.</p>
 
     <div class="question text-20 mb-2">
         <div class="question-image d-inline-block">5</div>
-        Ils prennent peu de femmes chez les pompiers
+        Ils prennent moins de femmes que d'hommes chez les pompiers
     </div>
-    <p><span class="text-uppercase text-danger font-weight-bold mr-2">Faux</span>Complètement faux. Au contraire, nous
-        recherchons beaucoup de femmes afin de renforcer nos rangs et assurer une parité.</p>
+    <p><span class="text-uppercase text-danger font-weight-bold mr-2">Faux</span>Bien au contraire ! Nous recherchons
+        tout autant de femmes, si ce n'est plus.</p>
 
     <div class="question text-20 mb-2">
         <div class="question-image d-inline-block">6</div>
@@ -109,17 +119,82 @@
 
     <h2>Questions fréquentes</h2>
 
-    <ol>
-        <li>aménager gardes et travail
-            <ol>
-                <li>comment faire les gardes vu que je travaille</li>
-                <li>je travaille trop loin</li>
-                <li>contraintes perso (examens, gosses...)</li>
-            </ol>
-        </li>
-        <li>missions pompiers</li>
-        <li>déroulement intégration st julien</li>
-        <li>et en chercher d'autres</li>
-    </ol>
-    <p>...</p>
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">1</div>
+        Quelles sont les missions des pompiers ?
+    </div>
+    <p>Les missions des pompiers sont la protection des personnes, des biens et de l'environnement. Par conséquent, les
+        pompiers interviennent sur beaucoup de types d'interventions. &Agrave; Saint Julien, vous rencontrerez
+        majoritairement les types d'interventions suivants : Secours à personne, Accidents de la route,
+        Lutte contre l'incendie, Inondations, et Sauvetage d'animaux</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">2</div>
+        Comment fonctionne le CIS Saint Julien de Concelles ?
+    </div>
+    <p>Le personnel du centre est réparti en 4 équipes, et chacune assure à tour de rôle une semaine de garde dans le
+        mois. Lors de cette semaine de garde, vous serez amené à être &laquo; bipé &raquo; sur intervention durant vos
+        horaires d'astreinte que vous aurez entré au préalable. Si vous souhaitez, lorsque vous n'êtes pas sur votre
+        semaine d'astreinte, vous pouvez vous rendre disponible en renfort de l'équipe de garde. Vous serez alors appelé
+        en dernier recours, si il n'y a pas assez de monde en astreinte. Lors de chaque semaine de garde, vous
+        participerez à la man&oelig;vre mensuelle de votre équipe. Vous aurez également quelques impératifs :
+        cérémonies, réunions mensuelles, tournées de calendrier...</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">3</div>
+        Comment se passera mon intégration au CIS Saint Julien de Concelles ?
+    </div>
+    <p>Une fois que votre candidature au sein du SDIS 44 et votre affectation au CIS Saint Julien de Concelles seront
+        acceptés, vous serez intégré à une équipe, et ferez partie intégrante de la caserne : vous assisterez
+        aux événements, aux réunions, aux man&oelig;uvres, etc. Un tuteur sera désigné dans votre équipe pour vous
+        accompagner tout au long de votre intégration et formation.<br>
+        Pendant ce temps, vous suivrez votre formation initiale de 30 jours, répartie en plusieurs stages de 2 à 5 jours
+        sur deux ans en moyenne. Une fois tous les modules validés, vous montez en grade et terminez officiellement
+        votre formation initiale, et êtes donc apte pour tous types d'intervention.</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">4</div>
+        Comment fonctionnent les stages ?
+    </div>
+    <p>Les formations de Sapeur-Pompier sont réparties en beaucoup de modules, et à chaque module se rattache un stage.
+        <br>Ce sont les modules qui valident votre aptitude à partir sur un type d'intervention. Par exemple, pour
+        pouvoir partir sur du secours à personne, vous devrez valider le stage PTS (Prompt Secours), ainsi que le stage
+        Équipier VSAV. Une fois ces deux modules validés, vous êtes apte à monter en tant qu'équipier dans le VSAV. Cela
+        fonctionne de la même manière pour tous les autres types d'intervention.<br>
+        Un stage a une durée comprise entre 2 et 5 jours. Lorsque vous devez passer un stage pour valider un module, le
+        SDIS 44 vous propose une date. Si celle-ci vous convient, vous êtes convoqué, sinon une nouvelle date vous est
+        proposé.<br>
+        Il y a possibilité de signer une convention entre le SDIS 44 et votre employeur qui vous autorise à vous rendre
+        en stage durant votre temps de travail, sans baisse de salaire. Cette convention n'est pas obligatoire et peut
+        très bien être refusée par l'employeur. Plus de détails à propos de cette convention sont disponibles dans la
+        plaquette d'information du SDIS 44.</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">5</div>
+        Que se passe-t-il lorsque je suis de garde et que je suis au travail ?
+    </div>
+    <p>Il existe plusieurs cas de figure :<br>
+        Si votre lieu de travail est trop loin de Saint Julien, aucun problème. Vous serez alors indisponible sur votre
+        temps de travail.<br>
+        Si votre lieu de travail se situe à moins de 5 minutes du CIS, vous pouvez passer une convention avec votre
+        employeur qui vous autorise à quitter votre travail en cas d'intervention. Cette convention n'est pas
+        obligatoire, et si votre employeur refuse de la signer, alors vous serez indisponible sur votre temps de
+        travail. Plus de détails à propos de cette convention sont disponibles dans la plaquette d'information du SDIS
+        44.</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">6</div>
+        Je suis souvent en déplacement avec mon travail. Est-ce compatible avec une activité opérationnelle ?
+    </div>
+    <p>Bien sûr ! Sur vos semaines d'astreinte, vous ne serez disponible qu'à partir du moment où vous ne serez pas en
+        déplacement.</p>
+
+    <div class="question text-20 mb-2">
+        <div class="question-image d-inline-block">7</div>
+        J'ai beaucoup de contraintes non professionnelles (enfants, loisirs...), comment cela se passe-t-il lors d'une
+        semaine de garde ?
+    </div>
+    <p>Si vous avez des contraintes de ce type, comme beaucoup de pompiers à Saint Julien, vous aurez simplement à vous
+        mettre indisponible sur cette période, cela ne pose aucun souci. Les horaires de garde sont souples et très
+        adaptables aux différents profils.</p>
 {% endblock %}

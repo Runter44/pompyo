@@ -96,6 +96,10 @@ $(document).ready(function() {
             $("#evenement_dateLimiteInscription_label").hide();
         }
     });
+
+    CKEDITOR.replace("evenement_description", {
+        language: 'fr',
+    });
 });
 
 

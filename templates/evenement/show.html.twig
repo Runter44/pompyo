@@ -5,7 +5,7 @@
 {% block body %}
     <h1>{{ evenement.nom }}</h1>
 
-    {% if date(evenement.dateDebut) < date() %}
+    {% if date(evenement.dateDebut|date_modify("+1 day")) < date() %}
         <h4>Cet événement a déjà eu lieu !</h4>
     {% endif %}
 
@@ -47,17 +47,17 @@
         {% endif %}
     {% endif %}
 
-    <div class="pb-4 font-italic">
+    <div class="pb-4">
         {{ evenement.teaser|nl2br }}
     </div>
 
     <div class="pb-4">
-        {{ evenement.description|nl2br }}
+        {{ evenement.description|raw }}
     </div>
 
     {% if is_granted('ROLE_USER') and evenement.inscriptionPossible == true %}
         <h2 class="my-4">Inscription à l'événement {{ evenement.nom }}</h2>
-        {% if date(evenement.dateLimiteInscription) >= date() %}
+        {% if date(evenement.dateLimiteInscription|date_modify("+1 day")) >= date() %}
             <p class="text-20 text-bleu">Vous avez jusqu'au
                 {{ evenement.dateLimiteInscription ? evenement.dateLimiteInscription|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") : evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") }}
                 pour vous inscrire ou modifier votre inscription.

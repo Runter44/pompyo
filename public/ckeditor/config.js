@@ -15,20 +15,23 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'styles' },
 		{ name: 'colors' },
 		{ name: 'links' },
+		{ name: 'insert' },
 		{ name: 'forms' },
+		{ name: 'tools' },
+		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
+		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
 		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
 		{ name: 'others' }
 	];
 
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
-	config.removeButtons = 'Subscript,Superscript,Anchor,Styles,SpecialChar,UploadImage';
+	config.removeButtons = 'Subscript,Superscript';
 
-	config.cloudServices_tokenUrl = "";
-	config.cloudServices_uploadUrl = "";
+	config.resize_minHeight = 500;
 
 	// Set the most common block elements.
-	config.format_tags = 'p;h3;h4';
+	config.format_tags = 'p;h2;h3';
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';

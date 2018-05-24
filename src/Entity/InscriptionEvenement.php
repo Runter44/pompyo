@@ -58,6 +58,11 @@ class InscriptionEvenement
      */
     private $commentaires;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateInscription;
+
     public function getUtilisateur(): ?Utilisateur
     {
         return $this->utilisateur;
@@ -114,6 +119,18 @@ class InscriptionEvenement
     public function setCommentaires(string $commentaires): self
     {
         $this->commentaires = $commentaires;
+
+        return $this;
+    }
+
+    public function getDateInscription(): ?\DateTimeInterface
+    {
+        return $this->dateInscription;
+    }
+
+    public function setDateInscription(\DateTimeInterface $dateInscription): self
+    {
+        $this->dateInscription = $dateInscription;
 
         return $this;
     }

@@ -9,15 +9,17 @@
         <h4>Cet événement a déjà eu lieu !</h4>
     {% endif %}
 
-    <h4 class="my-5">Au total, {{ evenement|nb_participants_total }} personnes sont inscrites, dont
+    <h4 class="my-4">Au total, {{ evenement|nb_participants_total }} personnes sont inscrites, dont
         {{ evenement|nb_participants_adultes }} adultes et {{ evenement|nb_participants_enfants }} enfants.
     </h4>
-    <table class="table table-striped">
-        <thead>
+    <table class="table" id="tableauInscritsEvenement">
+        <thead class="thead-dark">
         <tr>
-            <th>Nom de la personne</th>
-            <th>Nombre d'adultes</th>
-            <th>Nombre d'enfants</th>
+            <th onclick="sortTable(0)">Nom</th>
+            <th onclick="sortTable(1)">Commune</th>
+            <th onclick="sortTable(2)">Date de l'inscription</th>
+            <th onclick="sortTable(3)">Adultes</th>
+            <th onclick="sortTable(4)">Enfants</th>
             <th>Commentaires</th>
         </tr>
         </thead>
@@ -25,6 +27,8 @@
         {% for inscription in evenement.inscriptionEvenements %}
             <tr>
                 <td>{{ inscription.utilisateur.prenom }} {{ inscription.utilisateur.nom }}</td>
+                <td>{{ inscription.utilisateur.commune }}</td>
+                <td>{{ inscription.dateInscription|localizeddate("none", "none", "fr", null, "d/MM/Y 'à' HH:mm:ss") }}</td>
                 <td>{{ inscription.nbAdultes }}</td>
                 <td>{{ inscription.nbEnfants }}</td>
                 <td>{{ inscription.commentaires }}</td>

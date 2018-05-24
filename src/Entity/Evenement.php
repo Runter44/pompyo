@@ -48,7 +48,8 @@ class Evenement
     /**
      * @ORM\Column(type="text")
      *
-     * @Assert\NotBlank(message="La description est invalide")
+     * @Assert\NotBlank(message="Vous devez entrer une description")
+     * @Assert\Length(min=100, minMessage="La description doit au moins faire 100 caractères.")
      */
     private $description;
 
@@ -199,7 +200,7 @@ class Evenement
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(?\DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
@@ -211,7 +212,7 @@ class Evenement
         return $this->heureDebut;
     }
 
-    public function setHeureDebut(\DateTimeInterface $heureDebut): self
+    public function setHeureDebut(?\DateTimeInterface $heureDebut): self
     {
         $this->heureDebut = $heureDebut;
 

@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Form\DataTransformer\FileToStringTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -16,52 +19,53 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class, array(
-              'label' => 'Titre de l\'article',
-              'label_attr' => array(
-                'class' => 'col-sm-2 col-form-label',
-              ),
-              'attr' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Entrez le nom de l\'article',
-                'maxlength' => '125',
-              ),
+                'label' => 'Titre de l\'article',
+                'label_attr' => array(
+                    'class' => 'col-sm-2 col-form-label',
+                ),
+                'attr' => array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez le nom de l\'article',
+                    'maxlength' => '125',
+                ),
             ))
             ->add('description', TextareaType::class, array(
-              'label' => 'Description de l\'article',
-              'label_attr' => array(
-                'class' => 'col-sm-2 col-form-label',
-              ),
-              'attr' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Entrez un court résumé de l\'article',
-                'maxlength' => '500',
-                'rows' => '5',
-              ),
+                'label' => 'Description de l\'article',
+                'label_attr' => array(
+                    'class' => 'col-sm-2 col-form-label',
+                ),
+                'attr' => array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez un court résumé de l\'article',
+                    'maxlength' => '500',
+                    'rows' => '5',
+                ),
             ))
             ->add('miniature', FileType::class, array(
-              'label' => 'Choisissez une image',
-              'label_attr' => array(
-                'class' => 'custom-file-label',
-                'id' => 'nomMiniatureInput',
-              ),
-              'required' => false,
-              'attr' => array(
-                'class' => 'custom-file-input',
-                'accept' => 'image/jpeg',
-              ),
+                'label' => 'Choisissez une image',
+                'label_attr' => array(
+                    'class' => 'custom-file-label',
+                    'id' => 'nomMiniatureInput',
+                ),
+                'attr' => array(
+                    'class' => 'custom-file-input',
+                    'accept' => 'image/jpeg',
+                ),
             ))
             ->add('contenu', TextareaType::class, array(
-              'label' => 'Contenu de l\'article',
-              'label_attr' => array(
-                'class' => 'col-sm-2 col-form-label align-middle d-inline'
-              ),
-              'attr' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Entrez le contenu de l\'article',
-                'rows' => '50',
-              ),
-            ))
-        ;
+                'label' => 'Contenu de l\'article',
+                'label_attr' => array(
+                    'class' => 'col-sm-2 col-form-label align-middle d-inline'
+                ),
+                'required' => true,
+                'attr' => array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez le contenu de l\'article',
+                    'rows' => '50',
+                ),
+            ));
+
+        $builder->get('miniature')->addModelTransformer(new FileToStringTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -27,14 +27,8 @@
                 {{ evenement.dateLimiteInscription ? evenement.dateLimiteInscription|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") : evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") }}.
             {% endif %}
             {% if app.user != null and evenement in app.user.evenementsInscrit %}
-                <span class="badge badge-success">Vous êtes inscrit à cet événement</span>
+                <span class="text-success font-weight-bold d-block d-sm-inline-block">Vous êtes inscrit à cet événement</span>
             {% endif %}
         </p>
     {% endif %}
-
-    {#<a href="{{ path('evenement_show', {"slug": evenement.slug}) }}" class="btn btn-sm btn-danger">#}
-    {#<i class="fa fa-search-plus"></i>#}
-    {#Détails{% if evenement.inscriptionPossible == true %} et inscriptions{% endif %}#}
-    {#</a>#}
-
 </div>

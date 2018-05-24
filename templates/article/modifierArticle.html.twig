@@ -18,7 +18,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-sm-2 col-form-label align-middle d-inline">Nouvelle miniature<br><small class="form-text text-muted text-italic">(facultatif)</small></label>
+    <label class="col-sm-2 col-form-label align-middle d-inline">Miniature de l'article</label>
     <div class="col-sm-8 align-middle d-inline">
       <div class="custom-file">
         {{ form_widget(form.miniature) }}
@@ -32,28 +32,6 @@
   </div>
   <div class="form-group row">
     {{ form_label(form.contenu) }}
-    <button type="button" class="btn btn-outline-danger font-weight-bold mr-2 px-3" name="button" onclick="bbcode('[g]','[/g]');">
-      <i class="fa fa-bold"></i>
-    </button>
-    <button type="button" class="btn btn-outline-danger font-italic mr-2 px-3" name="button" onclick="bbcode('[i]','[/i]');">
-      <i class="fa fa-italic"></i>
-    </button>
-    <button type="button" class="btn btn-outline-danger mr-5 px-3" name="button" onclick="bbcode('[s]','[/s]');">
-      <u>
-        <i class="fa fa-underline"></i>
-      </u>
-    </button>
-    <button type="button" class="btn btn-outline-danger mr-2 px-3" name="button" onclick="bbcode('[url=\'\']','[/url]');">
-      <i class="fa fa-link"></i>
-    </button>
-    <button type="button" class="btn btn-outline-danger mr-5 px-3" name="button" onclick="bbcode('[youtube]','[/youtube]');">
-      <i class="fab fa-youtube"></i>
-    </button>
-    <button type="button" class="btn btn-outline-danger mr-2 px-3" name="button" onclick="bbcode('[t1]','[/t1]');">Titre</button>
-    <button type="button" class="btn btn-outline-danger mr-5 px-3" name="button" onclick="bbcode('[t2]','[/t2]');">Sous-titre</button>
-    <button type="button" class="btn btn-outline-danger mr-2 px-3" name="button" data-toggle="modal" data-target="#modalAjoutImage">
-      <i class="far fa-images"></i>
-    </button>
   </div>
   <div class="form-group">
     {{ form_widget(form.contenu) }}

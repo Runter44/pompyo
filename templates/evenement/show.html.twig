@@ -6,21 +6,25 @@
     <h1>{{ evenement.nom }}</h1>
 
     {% if date(evenement.dateDebut|date_modify("+1 day")) < date() %}
-        <h4>Cet événement a déjà eu lieu !</h4>
+        <h4 class="font-weight-bold text-danger text-center my-4">
+            <i class="fa fa-exclamation mr-2"></i> Cet événement a déjà eu lieu <i class="fa fa-exclamation ml-2"></i>
+        </h4>
     {% endif %}
 
     {% if is_granted('ROLE_ADMIN') %}
-        {% if evenement.inscriptionPossible == true %}
-            <a href="{{ path('evenement_participants', {'slug': evenement.slug}) }}" class="btn btn-danger">
-                <i class="fa fa-users"></i> Participants
+        <div class="d-flex justify-content-center mt-3">
+            {% if evenement.inscriptionPossible == true %}
+                <a href="{{ path('evenement_participants', {'slug': evenement.slug}) }}" class="btn btn-danger mr-2">
+                    <i class="fa fa-users"></i> Participants
+                </a>
+            {% endif %}
+
+            <a href="{{ path('evenement_edit', {'slug': evenement.slug}) }}" class="btn btn-danger mr-2">
+                <i class="far fa-edit"></i> Modifier
             </a>
-        {% endif %}
 
-        <a href="{{ path('evenement_edit', {'slug': evenement.slug}) }}" class="btn btn-danger">
-            <i class="far fa-edit"></i> Modifier
-        </a>
-
-        {{ include('evenement/_delete_form.html.twig') }}
+            {{ include('evenement/_delete_form.html.twig') }}
+        </div>
     {% endif %}
 
     <div class="py-4">
@@ -39,11 +43,11 @@
     </div>
 
     {% if is_granted('ROLE_USER') %}
-        {% if inscription.nbAdultes > 0 %}
-            <p class="text-success mb-3">Vous êtes inscrit à cet événement pour <b>{{ inscription.nbAdultes }}</b>
-                adultes et <b>{{ inscription.nbEnfants }}</b> enfants.</p>
-        {% else %}
-            <p class="mb-3 text-danger">Vous n'êtes pas inscrit à cet événement.</p>
+        {% if inscription.nbAdultes > 0 and evenement.inscriptionPossible == true %}
+            <p class="text-success mb-3">
+                Vous êtes inscrit à cet événement pour <b>{{ inscription.nbAdultes }}</b>
+                adulte(s){% if inscription.nbEnfants > 0 %} et <b>{{ inscription.nbEnfants }}</b> enfant(s){% endif %}.
+            </p>
         {% endif %}
     {% endif %}
 
@@ -51,16 +55,19 @@
         {{ evenement.teaser|nl2br }}
     </div>
 
-    <div class="pb-4">
+    <div class="pb-4 descriptionEvenement">
         {{ evenement.description|raw }}
     </div>
 
     {% if is_granted('ROLE_USER') and evenement.inscriptionPossible == true %}
-        <h2 class="my-4">Inscription à l'événement {{ evenement.nom }}</h2>
+        <h2 class="mt-4">
+            {% if inscription.nbAdultes > 0 %}Modifier votre inscription{% else %}S'inscrire{% endif %}
+            à {{ evenement.nom }}
+        </h2>
         {% if date(evenement.dateLimiteInscription|date_modify("+1 day")) >= date() %}
             <p class="text-20 text-bleu">Vous avez jusqu'au
                 {{ evenement.dateLimiteInscription ? evenement.dateLimiteInscription|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") : evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") }}
-                pour vous inscrire ou modifier votre inscription.
+                pour {% if inscription.nbAdultes > 0 %}modifier votre inscription{% else %}vous inscrire{% endif %}.
             </p>
             {{ form_start(form, {'attr': {'id': 'formInscriptionEvenement'}}) }}
             <div class="row">
@@ -73,11 +80,11 @@
             </div>
             {{ form_row(form.commentaires) }}
             {{ form_end(form) }}
-            <div class="d-block mx-auto">
+            <div class="d-flex justify-content-center">
                 {% if inscription.nbAdultes > 0 %}
                     <button onclick="document.getElementById('formInscriptionEvenement').submit()"
-                            class="btn btn-danger">
-                        Modifier l'inscription
+                            class="btn btn-danger mr-3">
+                        Modifier votre inscription
                     </button>
                     {% if inscription.nbAdultes > 0 %}
                         {{ include('evenement/_delete_inscription_form.html.twig') }}
@@ -85,19 +92,19 @@
                 {% else %}
                     <button onclick="document.getElementById('formInscriptionEvenement').submit()"
                             class="btn btn-danger">
-                        Valider l'inscription
+                        Valider votre inscription
                     </button>
                 {% endif %}
             </div>
         {% else %}
             <p class="text-20 text-bleu">Les inscriptions sont terminées. Vous aviez jusqu'au
-                {{ evenement.dateLimiteInscription ? evenement.dateLimiteInscription|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") : evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y") }}
-                pour vous inscrire.<br>
+                {{ evenement.dateLimiteInscription ? evenement.dateLimiteInscription|localizeddate("none", "none", "fr", null, "cccc d MMMM Y.") : evenement.dateDebut|localizeddate("none", "none", "fr", null, "cccc d MMMM Y.") }}
+                <br>
                 <small>Vous ne pouvez plus vous inscrire ou modifier votre inscription.</small>
             </p>
         {% endif %}
     {% elseif evenement.inscriptionPossible == true and is_granted('ROLE_USER') == false %}
-        <h2 class="my-4">Inscription à l'événement {{ evenement.nom }}</h2>
+        <h2 class="my-4">Inscription à {{ evenement.nom }}</h2>
         <p class="text-20 text-bleu">Veuillez vous connecter pour pouvoir vous inscrire.</p>
     {% endif %}
 

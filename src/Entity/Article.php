@@ -30,7 +30,6 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veillez à ce que la miniature soit au format JPG.")
-     * @Assert\File(mimeTypes={"image/jpeg"})
      */
     private $miniature;
 
@@ -38,11 +37,6 @@ class Article
      * @ORM\Column(type="text")
      */
     private $contenu;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $contenuBbcode;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur")
@@ -114,18 +108,6 @@ class Article
     public function setContenu(string $contenu): self
     {
         $this->contenu = $contenu;
-
-        return $this;
-    }
-
-    public function getContenuBbcode(): ?string
-    {
-        return $this->contenuBbcode;
-    }
-
-    public function setContenuBbcode(string $contenuBbcode): self
-    {
-        $this->contenuBbcode = $contenuBbcode;
 
         return $this;
     }

@@ -106,6 +106,7 @@ class EvenementController extends Controller
         if ($inscriptionEvenementForm->isSubmitted() && $inscriptionEvenementForm->isValid()) {
             $inscriptionEvenement->setUtilisateur($this->getUser());
             $inscriptionEvenement->setEvenement($evenement);
+            $inscriptionEvenement->setDateInscription(new \DateTime('now', new \DateTimeZone("Europe/Paris")));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($inscriptionEvenement);

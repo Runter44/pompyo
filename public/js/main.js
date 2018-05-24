@@ -1,14 +1,14 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // INSCRIPTION
     // Vérification du mot de passe
-    $("#utilisateur_password_first").keyup(function() {
+    $("#utilisateur_password_first").keyup(function () {
         if ($("#utilisateur_password_first").val() === $("#utilisateur_password_second").val()) {
             $("#utilisateur_password_second")[0].setCustomValidity("");
         } else {
             $("#utilisateur_password_second")[0].setCustomValidity("Les mots de passe entrés sont différents !");
         }
     });
-    $("#utilisateur_password_second").keyup(function() {
+    $("#utilisateur_password_second").keyup(function () {
         if ($("#utilisateur_password_first").val() === $("#utilisateur_password_second").val()) {
             $("#utilisateur_password_second")[0].setCustomValidity("");
         } else {
@@ -16,14 +16,14 @@ $(document).ready(function() {
         }
     });
 
-    $("#utilisateur_email").change(function() {
+    $("#utilisateur_email").change(function () {
         $.ajax({
             url: '/ajax/existe-email/',
             type: 'POST',
             data: {
                 email: $("#utilisateur_email").val()
             },
-            success: function(data) {
+            success: function (data) {
                 if (data !== "") {
                     $("#utilisateur_email")[0].setCustomValidity("Il existe déjà un compte avec cette adresse e-mail !");
                 } else {
@@ -33,7 +33,9 @@ $(document).ready(function() {
         });
     });
 
-    $("#article_miniature").change(function() {
+    // ARTICLES
+
+    $("#article_miniature").change(function () {
         readURL(this, $('#apercuMiniature'), $("#nomMiniatureInput"));
         if (this.files[0].name.toLowerCase().endsWith(".jpg")) {
             readURL(this, $("#apercuMiniature"), $("#nomMiniatureInput"));
@@ -44,7 +46,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#imageUpload").change(function(event) {
+    $("#imageUpload").change(function (event) {
         if (this.files[0].name.toLowerCase().endsWith(".jpg") || this.files[0].name.toLowerCase().endsWith(".png") || this.files[0].name.toLowerCase().endsWith(".gif")) {
             readURL(this, $("#apercuImageUpload"), $("#labelImageUpload"));
         } else {
@@ -54,26 +56,34 @@ $(document).ready(function() {
         }
     });
 
-    $("#formImportImage").submit(function(event) {
+    $("#formImportImage").submit(function (event) {
         event.preventDefault();
         if ($("#imageUpload").val() === "") {
-          alert("Vous n'avez pas sélectionné d'image !");
-          return;
+            alert("Vous n'avez pas sélectionné d'image !");
+            return;
         }
         $.ajax({
-          url: "/ajax/upload-image/",
-          data: new FormData(this),
-          type: "POST",
-          contentType: false,
-          processData: false,
-          cache: false,
-          success: function(data) {
-            $('#modalAjoutImage').modal('hide');
-            readURL($("#imageUpload"), $("#apercuImageUpload"), $("#labelImageUpload"));
-            bbcode("[img]"+data, "[/img]");
-          }
+            url: "/ajax/upload-image/",
+            data: new FormData(this),
+            type: "POST",
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                $('#modalAjoutImage').modal('hide');
+                readURL($("#imageUpload"), $("#apercuImageUpload"), $("#labelImageUpload"));
+                bbcode("[img]" + data, "[/img]");
+            }
         });
     });
+
+    if ($("#article_contenu").length > 0) {
+        CKEDITOR.replace('article_contenu', {
+            language: 'fr',
+            removeButtons: "Subscript,Superscript,Anchor,Styles,SpecialChar,Cut,Copy,Paste,PasteText,PasteFromWord,Source,Maximize",
+            height: 600
+        });
+    }
 
     /* EVENEMENTS */
     if (!$("#evenement_inscriptionPossible").is(':checked')) {
@@ -97,9 +107,12 @@ $(document).ready(function() {
         }
     });
 
-    CKEDITOR.replace("evenement_description", {
-        language: 'fr',
-    });
+    if ($("#evenement_description").length > 0) {
+        CKEDITOR.replace("evenement_description", {
+            language: 'fr',
+            removeButtons: "Subscript,Superscript,Anchor,Styles,Cut,Copy,Paste,PasteText,PasteFromWord,Source,Maximize"
+        });
+    }
 });
 
 
@@ -110,7 +123,7 @@ function readURL(input, target, label) {
 
         label.html(input.files[0].name);
 
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             target.attr('src', e.target.result);
         }
 
@@ -118,6 +131,43 @@ function readURL(input, target, label) {
     } else {
         label.html("Choisissez une image");
         target.attr("src", "");
+    }
+}
+
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("tableauInscritsEvenement");
+    switching = true;
+    dir = "asc";
+    while (switching) {
+        switching = false;
+        rows = table.getElementsByTagName("TR");
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            if (dir === "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch= true;
+                    break;
+                }
+            } else if (dir === "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+        } else {
+            if (switchcount === 0 && dir === "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
     }
 }
 

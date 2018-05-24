@@ -1,14 +1,7 @@
 /*GENERAL*/
 
-@font-face {
-    font-family: 'Lato';
-    font-weight: 400;
-    font-style: normal;
-    src: url(../webfonts/Lato-Regular.ttf);
-}
-
 * {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 h1 {
@@ -32,6 +25,10 @@ h4 {
 
 input[type="text"]:focus {
     outline-color: red;
+}
+
+p {
+    text-align: justify;
 }
 
 .logoCentre {
@@ -62,6 +59,11 @@ input[type="text"]:focus {
 
 .text-20 {
     font-size: 20px;
+}
+
+.contenu {
+    /*background: url("../images/layout/inc01.png");*/
+    background: #FFFFFF;
 }
 
 .containerPrincipal {
@@ -97,7 +99,7 @@ a:hover {
     text-align: left;
     font-size: 18px;
     color: #FFFFFF;
-    padding: 7px 0 7px 75px;
+    padding: 9px 0 7px 75px;
     cursor: pointer;
 }
 
@@ -117,6 +119,7 @@ a:hover {
 .lienFacebookCIS:hover, .lienRecrutementCIS:hover {
     text-decoration: none;
 }
+
 /*PAGE D'ACCUEIL*/
 
 /*ARTICLES*/
@@ -138,20 +141,21 @@ textarea {
 }
 
 .imageArticle:hover {
-    -webkit-box-shadow: 0px 0px 40px -5px rgba(220, 53, 69, 1);
-    -moz-box-shadow: 0px 0px 40px -5px rgba(220, 53, 69, 1);
-    box-shadow: 0px 0px 40px -5px rgba(220, 53, 69, 1);
+    -webkit-box-shadow: 0 0 40px -5px rgba(220, 53, 69, 1);
+    -moz-box-shadow: 0 0 40px -5px rgba(220, 53, 69, 1);
+    box-shadow: 0 0 40px -5px rgba(220, 53, 69, 1);
 }
 
 /*EVENEMENTS*/
 
 .blocEvenement:hover {
     cursor: pointer;
-    transition: 200ms;
 }
 
 .blocEvenement:hover .titreEvenement {
     color: #9f1c29;
+    text-shadow: 0 0 5px #888888;
+    transition: 200ms;
 }
 
 .titreEvenement {
@@ -162,16 +166,31 @@ textarea {
 .dateEvenement {
     color: #343a40;
     font-size: 18px;
+    font-weight: bold;
 }
 
 .villeEvenement {
     color: #0066b3;
     font-size: 18px;
+    font-weight: bold;
 }
 
 .petitBadge {
     display: inline-block;
     margin-top: -10px;
+}
+
+.descriptionEvenement img {
+    display: block;
+    margin: 0 auto;
+}
+
+.descriptionEvenement table {
+    margin: 0 auto;
+}
+
+#tableauInscritsEvenement th[onclick]:hover {
+    cursor: pointer;
 }
 
 /*RECRUTEMENT*/

@@ -4,15 +4,11 @@ namespace App\Controller;
 
 use App\Form\ArticleType;
 use App\Entity\Article;
-use App\Entity\Utilisateur;
 use App\Utils\Slugger;
-use App\Utils\TimeAgo;
-use App\Utils\BBCoder;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 class ArticleController extends Controller
@@ -32,126 +28,113 @@ class ArticleController extends Controller
     /**
      * @Route("/articles/nouveau/", name="nouvelArticle")
      * @param Request $request
-     * @param AuthorizationCheckerInterface $authChecker
-     * @param UserInterface $user
      * @param Slugger $slugger
-     * @param BBCoder $bbcoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function nouvelArticle(Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user, Slugger $slugger, BBCoder $bbcoder)
+    public function nouvelArticle(Request $request, Slugger $slugger)
     {
-        if ($authChecker->isGranted('ROLE_ADMIN')) {
+        $user = $this->getUser();
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
 
-          $article = new Article();
-          $form = $this->createForm(ArticleType::class, $article);
+        $article = new Article();
+        $form = $this->createForm(ArticleType::class, $article);
 
-          $form->handleRequest($request);
+        $form->handleRequest($request);
 
-          if ($form->isSubmitted() && $form->isValid()) {
-              $entityManager = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
 
-              // upload miniature image
-              $image = $form->get("miniature")->getData();
-              $nomImage = md5(uniqid()).'.'.$image->guessExtension();
-              $image->move($this->getParameter('miniatures_directory'), $nomImage);
-              $article->setMiniature($nomImage);
+            // upload miniature image
+            $image = $form->get("miniature")->getData();
+            $nomImage = md5(uniqid()) . '.' . $image->guessExtension();
+            $image->move($this->getParameter('miniatures_directory'), $nomImage);
+            $article->setMiniature($nomImage);
 
-              // on insère les paramètres prédéfinis
-              $article->setAuteur($user);
-              $article->setContenuBbcode($article->getContenu());
-              $article->setContenu($bbcoder->bbcodeToHtml($article->getContenuBbcode()));
-              $article->setDateCreation(new \DateTime());
-              $article->setDateModif(new \DateTime());
-              $article->setUrl($slugger->genererSlug($article->getTitre()));
+            // on insère les paramètres prédéfinis
+            $article->setAuteur($user);
+            $article->setDateCreation(new \DateTime());
+            $article->setDateModif(new \DateTime());
+            $article->setUrl($slugger->genererSlug($article->getTitre()));
 
-              $entityManager->persist($article);
-              $entityManager->flush();
+            $entityManager->persist($article);
+            $entityManager->flush();
 
-              return $this->redirectToRoute('voirArticle', [
-                  'url' => $article->getUrl()
-              ]);
-          }
-
-          return $this->render('article/nouvelArticle.html.twig', [
-            'form' => $form->createView(),
-          ]);
+            return $this->redirectToRoute('voirArticle', [
+                'url' => $article->getUrl()
+            ]);
         }
-        return $this->redirectToRoute('articles');
+
+        return $this->render('article/nouvelArticle.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/articles/modifier/{slug}/", name="modifierArticle")
+     * @Route("/articles/modifier/{url}/", name="modifierArticle")
+     * @param Article $article
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function modifierArticle($slug, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user, Slugger $slugger, BBCoder $bbcoder)
+    public function modifierArticle(Article $article, Request $request)
     {
-        if ($authChecker->isGranted('ROLE_ADMIN')) {
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
 
-          $article = $this->getDoctrine()->getRepository(Article::class)->findOneBy(["url" => $slug]);
-          $article->setContenu($article->getContenuBbcode());
-          $article->setMiniature(new File($this->getParameter('miniatures_directory').'/'.$article->getMiniature()));
-          $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article);
 
-          $form->handleRequest($request);
+        $form->handleRequest($request);
 
-          if ($form->isSubmitted() && $form->isValid()) {
-              $entityManager = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
 
-              // upload miniature image
-              $image = $form->get("miniature")->getData();
-              $nomImage = md5(uniqid()).'.'.$image->guessExtension();
-              $image->move($this->getParameter('miniatures_directory'), $nomImage);
-              $article->setMiniature($nomImage);
+            // upload miniature image
+            $image = $form->get("miniature")->getData();
+            $nomImage = md5(uniqid()) . '.' . $image->guessExtension();
+            $image->move($this->getParameter('miniatures_directory'), $nomImage);
+            $article->setMiniature($nomImage);
 
-              // on insère les paramètres prédéfinis
-              $article->setContenuBbcode($article->getContenu());
-              $article->setContenu($bbcoder->bbcodeToHtml($article->getContenuBbcode()));
-              $article->setDateModif(new \DateTime());
+            $article->setDateModif(new \DateTime());
 
-              $entityManager->persist($article);
-              $entityManager->flush();
+            $entityManager->persist($article);
+            $entityManager->flush();
 
-              return $this->redirectToRoute('voirArticle', [
-                  'url' => $article->getUrl()
-              ]);
-          }
+            return $this->redirectToRoute('voirArticle', [
+                'url' => $article->getUrl()
+            ]);
+        }
 
-          if ($form->isSubmitted() && !$form->isValid()) {
-              $this->addFlash('error', $form->getErrors());
-          }
-
-          return $this->render('article/modifierArticle.html.twig', [
+        return $this->render('article/modifierArticle.html.twig', [
             'form' => $form->createView(),
             'article' => $article,
-          ]);
-        }
-        return $this->redirectToRoute('articles');
+        ]);
     }
 
     /**
      * @Route("/articles/{url}/", name="voirArticle")
+     * @param $article
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function voirArticle($url, TimeAgo $time)
+    public function voirArticle(Article $article)
     {
-        $article = $this->getDoctrine()->getRepository(Article::class)->findOneBy([
-          "url" => $url,
-        ]);
         return $this->render('article/voirArticle.html.twig', [
-          'article' => $article,
+            'article' => $article,
         ]);
     }
 
     /**
-     * @Route("/articles/supprimer/{id}/", name="supprimerArticle")
+     * @Route("/articles/supprimer/{id}/", name="supprimerArticle", methods="DELETE")
+     * @param Article $article
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function supprimerArticle($id, AuthorizationCheckerInterface $authChecker)
+    public function supprimerArticle(Article $article, Request $request)
     {
-        if ($authChecker->isGranted('ROLE_ADMIN')) {
-          $entityManager = $this->getDoctrine()->getManager();
-          $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
-
-          $entityManager->remove($article);
-          $entityManager->flush();
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($article);
+            $em->flush();
         }
+
         return $this->redirectToRoute('articles');
     }
 }

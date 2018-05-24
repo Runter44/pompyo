@@ -69,9 +69,6 @@ class FileToStringTransformer implements DataTransformerInterface
      */
     public function reverseTransform($fileMiniature)
     {
-        if ($fileMiniature === null) {
-            return '';
-        }
-        return $fileMiniature->getClientOriginalName();
+        return $fileMiniature;
     }
 }

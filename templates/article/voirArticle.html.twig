@@ -19,10 +19,15 @@
         </div>
         <div class="col-8">
             <p class="text-bleu">
-                Le {{ article.dateCreation|localizeddate("none", "none", "fr", null, "d MMMM Y 'à' HH'h'mm") }},
-                par {{ article.auteur.prenom }} {{ article.auteur.nom }}</p>
+                Le {{ article.dateModif|localizeddate("none", "none", "fr", null, "d MMMM Y 'à' HH'h'mm") }},
+                par {{ article.auteur.prenom }}.</p>
             <p>{{ article.description }}</p>
         </div>
     </div>
     <p>{{ article.contenu|raw }}</p>
+
+    <div id="imageModale" class="imageModale">
+        <span class="closeImageModale" onclick="$(this).parent().hide()">&times;</span>
+        <img class="imgImageModale" id="imgImageModale">
+    </div>
 {% endblock %}

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\ArticleModifyType;
 use App\Form\ArticleType;
 use App\Entity\Article;
+use App\Repository\ArticleRepository;
 use App\Utils\Slugger;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,9 +31,10 @@ class ArticleController extends Controller
      * @Route("/articles/nouveau/", name="nouvelArticle")
      * @param Request $request
      * @param Slugger $slugger
+     * @param ArticleRepository $articleRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function nouvelArticle(Request $request, Slugger $slugger)
+    public function nouvelArticle(Request $request, Slugger $slugger, ArticleRepository $articleRepository)
     {
         $user = $this->getUser();
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
@@ -42,26 +45,30 @@ class ArticleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            if ($articleRepository->findOneBy(["url" => $slugger->genererSlug($article->getTitre())]) === null) {
+                $entityManager = $this->getDoctrine()->getManager();
 
-            // upload miniature image
-            $image = $form->get("miniature")->getData();
-            $nomImage = md5(uniqid()) . '.' . $image->guessExtension();
-            $image->move($this->getParameter('miniatures_directory'), $nomImage);
-            $article->setMiniature($nomImage);
+                // upload miniature image
+                $image = $form->get("miniature")->getData();
+                $nomImage = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move($this->getParameter('miniatures_directory'), $nomImage);
+                $article->setMiniature($nomImage);
 
-            // on insère les paramètres prédéfinis
-            $article->setAuteur($user);
-            $article->setDateCreation(new \DateTime());
-            $article->setDateModif(new \DateTime());
-            $article->setUrl($slugger->genererSlug($article->getTitre()));
+                // on insère les paramètres prédéfinis
+                $article->setAuteur($user);
+                $article->setDateCreation(new \DateTime());
+                $article->setDateModif(new \DateTime());
+                $article->setUrl($slugger->genererSlug($article->getTitre()));
 
-            $entityManager->persist($article);
-            $entityManager->flush();
+                $entityManager->persist($article);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('voirArticle', [
-                'url' => $article->getUrl()
-            ]);
+                return $this->redirectToRoute('voirArticle', [
+                    'url' => $article->getUrl()
+                ]);
+            } else {
+                $this->addFlash('error', 'Le nom de cet article est déjà utilisé');
+            }
         }
 
         return $this->render('article/nouvelArticle.html.twig', [
@@ -79,18 +86,12 @@ class ArticleController extends Controller
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
 
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleModifyType::class, $article);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-
-            // upload miniature image
-            $image = $form->get("miniature")->getData();
-            $nomImage = md5(uniqid()) . '.' . $image->guessExtension();
-            $image->move($this->getParameter('miniatures_directory'), $nomImage);
-            $article->setMiniature($nomImage);
 
             $article->setDateModif(new \DateTime());
 

@@ -72,7 +72,12 @@ $(document).ready(function () {
             success: function (data) {
                 $('#modalAjoutImage').modal('hide');
                 readURL($("#imageUpload"), $("#apercuImageUpload"), $("#labelImageUpload"));
-                bbcode("[img]" + data, "[/img]");
+                let imgHtml = CKEDITOR.dom.element.createFromHtml('<img src="/uploads/articles/images/' + data + '" alt="Image" style="max-height: 300px; cursor: pointer;" class="img-fluid" onclick="openModalImage(this);">');
+                if (CKEDITOR.instances.article_contenu) {
+                    CKEDITOR.instances.article_contenu.insertElement(imgHtml);
+                } else if (CKEDITOR.instances.article_modify_contenu) {
+                    CKEDITOR.instances.article_modify_contenu.insertElement(imgHtml);
+                }
             }
         });
     });
@@ -80,8 +85,16 @@ $(document).ready(function () {
     if ($("#article_contenu").length > 0) {
         CKEDITOR.replace('article_contenu', {
             language: 'fr',
-            removeButtons: "Subscript,Superscript,Anchor,Styles,SpecialChar,Cut,Copy,Paste,PasteText,PasteFromWord,Source,Maximize",
-            height: 600
+            removeButtons: "Subscript,Superscript,Anchor,Styles,Cut,Copy,Paste,PasteText,PasteFromWord,Source,Maximize,Image",
+            height: 600,
+        });
+    }
+
+    if ($("#article_modify_contenu").length > 0) {
+        CKEDITOR.replace('article_modify_contenu', {
+            language: 'fr',
+            removeButtons: "Subscript,Superscript,Anchor,Styles,Cut,Copy,Paste,PasteText,PasteFromWord,Source,Maximize,Image",
+            height: 600,
         });
     }
 
@@ -110,11 +123,20 @@ $(document).ready(function () {
     if ($("#evenement_description").length > 0) {
         CKEDITOR.replace("evenement_description", {
             language: 'fr',
-            removeButtons: "Subscript,Superscript,Anchor,Styles,Cut,Copy,Paste,PasteText,PasteFromWord,Source,Maximize"
+            removeButtons: "Subscript,Superscript,Anchor,Styles,Cut,Copy,Paste,PasteText,PasteFromWord,Source,Maximize,Image"
         });
     }
 });
 
+function openModalImage(image) {
+    $("#imageModale").show();
+    $("#imgImageModale").attr('src', image.src);
+    $("#imageModale").click(function (event) {
+        if (!$(event.target).is($("#imgImageModale"))) {
+            $("#imageModale").hide();
+        }
+    });
+}
 
 function readURL(input, target, label) {
 
@@ -148,7 +170,7 @@ function sortTable(n) {
             y = rows[i + 1].getElementsByTagName("TD")[n];
             if (dir === "asc") {
                 if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    shouldSwitch= true;
+                    shouldSwitch = true;
                     break;
                 }
             } else if (dir === "desc") {
@@ -161,7 +183,7 @@ function sortTable(n) {
         if (shouldSwitch) {
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
             switching = true;
-            switchcount ++;
+            switchcount++;
         } else {
             if (switchcount === 0 && dir === "asc") {
                 dir = "desc";

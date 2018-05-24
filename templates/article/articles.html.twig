@@ -16,8 +16,8 @@
   </div>
   <div class="col-9 py-2">
     <a class="lienArticle" href="{{ path('voirArticle', { url: article.url }) }}"><h4>{{ article.titre }}</h4></a>
-    <p class="small text-bleu mb-1">Il y a {{ article.dateCreation|time_ago }}</p>
-    <p class="text-dark">{{ article.description }}</p>
+    <p class="small text-bleu mb-2">Il y a {{ article.dateModif|time_ago }}, par {{ article.auteur.prenom }}.</p>
+    <p class="text-dark d-none d-lg-block">{{ article.description }}</p>
   </div>
 </div>
 {% endfor %}

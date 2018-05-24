@@ -11,9 +11,9 @@ CKEDITOR.editorConfig = function( config ) {
 	// The toolbar groups arrangement, optimized for two toolbar rows.
 	config.toolbarGroups = [
 		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		{ name: 'styles' },
+		{ name: 'paragraph',   groups: [ 'align', 'list', 'indent', 'blocks', 'bidi' ] },
 		{ name: 'colors' },
+		{ name: 'styles' },
 		{ name: 'links' },
 		{ name: 'insert' },
 		{ name: 'forms' },
@@ -29,10 +29,15 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeButtons = 'Subscript,Superscript';
 
 	config.resize_minHeight = 500;
+    config.extraPlugins = 'youtube,panelbutton,colorbutton,justify,colordialog';
+
+    // Si CKAwesome est activé
+    // config.fontawesomePath = '/css/fontawesome-all.css';
 
 	// Set the most common block elements.
 	config.format_tags = 'p;h2;h3';
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+    config.allowedContent = true;
 };

@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
+ * @UniqueEntity("titre")
  */
 class Article
 {
@@ -19,22 +21,28 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Le titre est invalide")
+     * @Assert\Length(max=255, maxMessage="Le titre est trop long")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank(message="La description est invalide")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Veillez à ce que la miniature soit au format JPG.")
      */
     private $miniature;
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank(message="Le contenu est invalide")
      */
     private $contenu;
 

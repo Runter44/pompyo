@@ -4,7 +4,7 @@
 
 {% block body %}
   <h1 class="mb-4">Modifier un article</h1>
-  {{ form_start(form, {'attr': {'id': 'redactionArticle'}}) }}
+  {{ form_start(form, {'attr': {'id': 'redactionArticle', 'onsubmit': 'return confirm("Publier les modifications de l\'article ?");'}}) }}
   <div class="form-group row">
     {{ form_label(form.titre) }}
     <div class="col-sm-10">
@@ -18,20 +18,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-sm-2 col-form-label align-middle d-inline">Miniature de l'article</label>
-    <div class="col-sm-8 align-middle d-inline">
-      <div class="custom-file">
-        {{ form_widget(form.miniature) }}
-        {{ form_label(form.miniature) }}
-      </div>
-      <small class="form-text text-muted">L'image doit être au format JPG</small>
-    </div>
-    <div class="col-sm-2 align-middle d-inline">
-      <img class="img-fluid rounded" id="apercuMiniature" src="{{ asset('uploads/articles/miniatures/' ~ article.miniature) }}">
-    </div>
-  </div>
-  <div class="form-group row">
     {{ form_label(form.contenu) }}
+    <button type="button" class="btn btn-outline-danger mr-2 px-3" name="button" data-toggle="modal" data-target="#modalAjoutImage">
+      <i class="far fa-images"></i> Insérer une image
+    </button>
   </div>
   <div class="form-group">
     {{ form_widget(form.contenu) }}

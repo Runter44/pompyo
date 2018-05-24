@@ -21,7 +21,7 @@ class ArticleType extends AbstractType
             ->add('titre', TextType::class, array(
                 'label' => 'Titre de l\'article',
                 'label_attr' => array(
-                    'class' => 'col-sm-2 col-form-label',
+                    'class' => 'col-sm-2 col-form-label text-bleu',
                 ),
                 'attr' => array(
                     'class' => 'form-control',
@@ -32,7 +32,7 @@ class ArticleType extends AbstractType
             ->add('description', TextareaType::class, array(
                 'label' => 'Description de l\'article',
                 'label_attr' => array(
-                    'class' => 'col-sm-2 col-form-label',
+                    'class' => 'col-sm-2 col-form-label text-bleu',
                 ),
                 'attr' => array(
                     'class' => 'form-control',
@@ -55,7 +55,7 @@ class ArticleType extends AbstractType
             ->add('contenu', TextareaType::class, array(
                 'label' => 'Contenu de l\'article',
                 'label_attr' => array(
-                    'class' => 'col-sm-2 col-form-label align-middle d-inline'
+                    'class' => 'col-sm-2 col-form-label align-middle d-inline text-bleu'
                 ),
                 'required' => true,
                 'attr' => array(

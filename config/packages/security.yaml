@@ -12,6 +12,7 @@ security:
     role_hierarchy:
         ROLE_PRIVE: ROLE_USER
         ROLE_ADMIN: [ROLE_PRIVE, ROLE_USER]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_PRIVE, ROLE_USER]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -38,7 +39,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/connexion/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/inscription/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/articles/nouveau/, role: ROLE_ADMIN }
         - { path: ^/articles/supprimer/, role: ROLE_ADMIN }
         - { path: ^/articles/modifier/, role: ROLE_ADMIN }

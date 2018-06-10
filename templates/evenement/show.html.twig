@@ -42,11 +42,11 @@
         {% endif %}<br>
     </div>
 
-    {% if is_granted('ROLE_USER') %}
+    {% if is_granted('ROLE_PRIVE') %}
         {% if inscription.nbAdultes > 0 and evenement.inscriptionPossible == true %}
             <p class="text-success mb-3">
                 Vous êtes inscrit à cet événement pour <b>{{ inscription.nbAdultes }}</b>
-                adulte(s){% if inscription.nbEnfants > 0 %} et <b>{{ inscription.nbEnfants }}</b> enfant(s){% endif %}.
+                adulte(s){% if inscription.nbEnfants > 0 %} et <b>{{ inscription.nbEnfants }}</b> moins de 12 ans{% endif %}.
             </p>
         {% endif %}
     {% endif %}
@@ -59,7 +59,7 @@
         {{ evenement.description|raw }}
     </div>
 
-    {% if is_granted('ROLE_USER') and evenement.inscriptionPossible == true %}
+    {% if is_granted('ROLE_PRIVE') and evenement.inscriptionPossible == true %}
         <h2 class="mt-4">
             {% if inscription.nbAdultes > 0 %}Modifier votre inscription{% else %}S'inscrire{% endif %}
             à {{ evenement.nom }}
@@ -103,9 +103,6 @@
                 <small>Vous ne pouvez plus vous inscrire ou modifier votre inscription.</small>
             </p>
         {% endif %}
-    {% elseif evenement.inscriptionPossible == true and is_granted('ROLE_USER') == false %}
-        <h2 class="my-4">Inscription à {{ evenement.nom }}</h2>
-        <p class="text-20 text-bleu">Veuillez vous connecter pour pouvoir vous inscrire.</p>
     {% endif %}
 
 {% endblock %}

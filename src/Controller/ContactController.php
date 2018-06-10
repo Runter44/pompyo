@@ -17,19 +17,12 @@ class ContactController extends Controller
      * @Route("/contact/", name="contact")
      * @param ValidatorInterface $validator
      * @param Request $request
-     * @param AuthorizationCheckerInterface $authChecker
-     * @param UserInterface $user
+     * @param \Swift_Mailer $mailer
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function contact(ValidatorInterface $validator, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user = null, \Swift_Mailer $mailer)
+    public function contact(ValidatorInterface $validator, Request $request, \Swift_Mailer $mailer)
     {
         $contact = new Contact();
-
-        if ($authChecker->isGranted('ROLE_USER')) {
-            $contact->setPrenom($user->getPrenom());
-            $contact->setNom($user->getNom());
-            $contact->setEmail($user->getUsername());
-        }
 
         $form = $this->createForm(ContactType::class, $contact);
 
@@ -55,7 +48,6 @@ class ContactController extends Controller
                 if ($decode['success'] === true) {
                 $contact->setDateEnvoi(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
                     $contact->setIpEnvoi($request->getClientIp());
-                    $entityManager = $this->getDoctrine()->getManager();
 
                     $message = (new \Swift_Message('Demande de contact'))
                         ->setFrom(['pompiersstjuliendeconcelles@gmail.com' => 'Sapeurs-Pompiers de Saint Julien de Concelles'])
@@ -78,8 +70,6 @@ class ContactController extends Controller
                         $contact->setEnvoye(true);
                     }
 
-                    $entityManager->persist($contact);
-                    $entityManager->flush();
                     return $this->redirectToRoute('accueil');
                 } else {
                     $this->addFlash('error', 'Veuillez cocher la case "Je ne suis pas un robot"');

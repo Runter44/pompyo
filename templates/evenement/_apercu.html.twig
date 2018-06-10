@@ -16,7 +16,7 @@
 
     <p class="my-2 text-justify text-dark">{{ evenement.teaser|nl2br }}</p>
 
-    {% if evenement.inscriptionPossible == true %}
+    {% if evenement.inscriptionPossible == true and is_granted('ROLE_PRIVE') %}
         <p class="text-bleu mb-2">
             {% if date(evenement.dateLimiteInscription) >= date() %}
                 Vous avez jusqu'au

@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
+ * @UniqueEntity("email")
  */
 class Utilisateur implements UserInterface, \Serializable
 {
@@ -64,14 +66,6 @@ class Utilisateur implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="App\Entity\InscriptionEvenement", mappedBy="utilisateur")
      */
     private $inscriptionEvenements;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Assert\Length(max=255, maxMessage="La commune est trop longue")
-     * @Assert\NotBlank(message="La commune est invalide")
-     */
-    private $commune;
 
     public function __construct()
     {
@@ -231,18 +225,6 @@ class Utilisateur implements UserInterface, \Serializable
                 $inscriptionEvenement->setUtilisateur(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCommune(): ?string
-    {
-        return $this->commune;
-    }
-
-    public function setCommune(string $commune): self
-    {
-        $this->commune = $commune;
 
         return $this;
     }

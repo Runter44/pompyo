@@ -16,18 +16,16 @@
         <thead class="thead-dark">
         <tr>
             <th onclick="sortTable(0)">Nom</th>
-            <th onclick="sortTable(1)">Commune</th>
-            <th onclick="sortTable(2)">Date de l'inscription</th>
-            <th onclick="sortTable(3)">Adultes</th>
-            <th onclick="sortTable(4)">Enfants</th>
-            <th>Commentaires</th>
+            <th onclick="sortTable(1)">Date de l'inscription</th>
+            <th onclick="sortTable(2)">Adultes</th>
+            <th onclick="sortTable(3)">Enfants</th>
+            <th onclick="sortTable(4)">Commentaires</th>
         </tr>
         </thead>
         <tbody>
         {% for inscription in evenement.inscriptionEvenements %}
             <tr>
                 <td>{{ inscription.utilisateur.prenom }} {{ inscription.utilisateur.nom }}</td>
-                <td>{{ inscription.utilisateur.commune }}</td>
                 <td>{{ inscription.dateInscription|localizeddate("none", "none", "fr", null, "d/MM/Y 'à' HH:mm:ss") }}</td>
                 <td>{{ inscription.nbAdultes }}</td>
                 <td>{{ inscription.nbEnfants }}</td>

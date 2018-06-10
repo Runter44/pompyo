@@ -4,9 +4,24 @@
 
 {% block body %}
     <h1>Administration du site</h1>
-    <div class="d-flex justify-content-around mt-5">
-        <a href="#" class="btn btn-danger"><i class="fa fa-user"></i> Modifier le rôle d'un utilisateur</a>
-        <a href="#" class="btn btn-danger"><i class="fa fa-newspaper"></i> Modifier les textes du site</a>
-        <a href="#" class="btn btn-danger"><i class="fa fa-users"></i> Modifier la liste du personnel</a>
+    <h4 class="mt-4">Ajouter un utilisateur</h4>
+    {{ form_start(formInscription, {'attr': {'onsubmit':'return confirm("Êtes-vous sûr de vouloir ajouter cet utilisateur ?");'}} ) }}
+    <div class="row">
+        <div class="col-12 col-md-4">
+            {{ form_row(formInscription.email) }}
+        </div>
+        <div class="col-12 col-md-4">
+            {{ form_row(formInscription.prenom) }}
+        </div>
+        <div class="col-12 col-md-4">
+            {{ form_row(formInscription.nom) }}
+        </div>
     </div>
+    <p class="small text-muted mb-3">Un mail contenant les identifiants générés sera envoyé à l'adresse e-mail définie.
+        Par mesure de sécurité, cet utilisateur n'aura par défaut aucun droit sur le site.
+        Avant de les modifier, assurez-vous qu'il s'agit de la bonne personne !</p>
+    <input type="submit" value="Ajouter l'utilisateur" class="btn btn-danger d-block mx-auto">
+    {{ form_end(formInscription) }}
+
+    <h4 class="mt-4">Modifier le rôle d'un utilisateur</h4>
 {% endblock %}

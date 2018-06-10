@@ -1,22 +1,6 @@
 $(document).ready(function () {
     // INSCRIPTION
-    // Vérification du mot de passe
-    $("#utilisateur_password_first").keyup(function () {
-        if ($("#utilisateur_password_first").val() === $("#utilisateur_password_second").val()) {
-            $("#utilisateur_password_second")[0].setCustomValidity("");
-        } else {
-            $("#utilisateur_password_second")[0].setCustomValidity("Les mots de passe entrés sont différents !");
-        }
-    });
-    $("#utilisateur_password_second").keyup(function () {
-        if ($("#utilisateur_password_first").val() === $("#utilisateur_password_second").val()) {
-            $("#utilisateur_password_second")[0].setCustomValidity("");
-        } else {
-            $("#utilisateur_password_second")[0].setCustomValidity("Les mots de passe entrés sont différents !");
-        }
-    });
-
-    $("#utilisateur_email").change(function () {
+    $("#utilisateur_email").keyup(function () {
         $.ajax({
             url: '/ajax/existe-email/',
             type: 'POST',

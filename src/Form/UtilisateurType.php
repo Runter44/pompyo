@@ -21,39 +21,16 @@ class UtilisateurType extends AbstractType
               'label' => 'Adresse e-mail',
               'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'Entrez votre adresse e-mail',
+                'placeholder' => 'Entrez une adresse e-mail valide',
                 'maxlength' => '100',
                 'autocomplete' => 'email',
-              ),
-            ))
-            ->add('password', RepeatedType::class, array(
-              'type' => PasswordType::class,
-              'first_options' => array(
-                'label' => 'Mot de passe',
-                'attr' => array(
-                  'class' => 'form-control',
-                  'placeholder' => 'Votre mot de passe',
-                  'maxlength' => '20',
-                  'pattern' => '.{8,20}',
-                  'autocomplete' => 'new-password',
-                ),
-              ),
-              'second_options' => array(
-                'label' => 'Confirmation',
-                'attr' => array(
-                  'class' => 'form-control',
-                  'placeholder' => 'Confirmation de votre mot de passe',
-                  'maxlength' => '20',
-                  'pattern' => '.{8,20}',
-                  'autocomplete' => 'new-password',
-                ),
               ),
             ))
             ->add('prenom', TextType::class, array(
               'label' => 'Prénom',
               'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'Entrez votre prénom',
+                'placeholder' => 'Entrez le prénom de la personne',
                 'maxlength' => '50',
                 'autocomplete' => 'given-name',
               ),
@@ -62,18 +39,10 @@ class UtilisateurType extends AbstractType
               'label' => 'Nom',
               'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'Entrez votre nom',
+                'placeholder' => 'Entrez le nom de la personne',
                 'maxlength' => '50',
                 'autocomplete' => 'family-name',
               ),
-            ))
-            ->add('commune', TextType::class, array(
-                'label' => 'Commune de résidence',
-                'attr' => array(
-                    'class' => 'form-control',
-                    'placeholder' => 'Entrez votre commune de résidence',
-                    'maxlength' => '255',
-                ),
             ))
         ;
     }

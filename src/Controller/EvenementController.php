@@ -104,6 +104,8 @@ class EvenementController extends Controller
         $inscriptionEvenementForm->handleRequest($request);
 
         if ($inscriptionEvenementForm->isSubmitted() && $inscriptionEvenementForm->isValid()) {
+            $this->denyAccessUnlessGranted('ROLE_PRIVE');
+
             $inscriptionEvenement->setUtilisateur($this->getUser());
             $inscriptionEvenement->setEvenement($evenement);
             $inscriptionEvenement->setDateInscription(new \DateTime('now', new \DateTimeZone("Europe/Paris")));
@@ -212,7 +214,7 @@ class EvenementController extends Controller
      */
     public function deleteInscription(Request $request, Evenement $evenement): Response
     {
-        $this->denyAccessUnlessGranted("ROLE_USER");
+        $this->denyAccessUnlessGranted("ROLE_PRIVE");
         if ($this->isCsrfTokenValid('delete' . $evenement->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
 

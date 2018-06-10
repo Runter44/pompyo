@@ -1,0 +1,17 @@
+<h3 style="margin-bottom: 30px">Bienvenue sur le site internet des Sapeurs-Pompiers de Saint Julien de Concelles !</h3>
+
+<p style="margin-bottom: 20px">
+    Bonjour {{ user.prenom }} ! {{ adder.prenom }} {{ adder.nom }} vous a créé un compte sur notre site internet.<br>
+    Vous pouvez désormais vous connecter via <a href="{{ url('connexion') }}">ce lien</a> avec les identifiants fournis.
+</p>
+
+<p style="margin-bottom: 20px">
+    Login : <b>{{ user.email }}</b><br>
+    Mot de passe : <b>{{ password }}</b>
+</p>
+
+<p>
+    Si vous souhaitez, vous pouvez modifier vos informations personnelles et votre mot de passe sur la page "Mon compte".<br>
+    Cordialement,<br>
+    L'équipe web du CIS Saint Julien de Concelles.
+</p>

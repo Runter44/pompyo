@@ -13,48 +13,44 @@
 </head>
 <body class="bg-dark">
 
-<div class="container-fluid border-bottom border-danger bg-white">
+<div class="container-fluid bg-white">
     <div class="container">
         <div class="row">
-            <div class="col-6 p-0">
+            <div class="col-12 col-md-6 p-0">
                 <a href="{{ path('accueil') }}">
                     <img src="{{ asset('images/logo_cis_couleur.png') }}" alt="CIS Saint Julien de Concelles"
                          class="logoCentre img-fluid">
                 </a>
             </div>
-            <div class="col-6 p-0 text-right d-table-cell align-middle" style="line-height: 94px">
-                {#<div class=" ml-0">#}
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <p class="d-inline align-middle">Bienvenue, {{ app.user.prenom }} !</p>
-                    <a href="#" class="btn btn-outline-danger ml-2 align-middle">
-                        <i class="fa fa-cog"></i>
-                        Mon compte
-                    </a>
-                    <a href="{{ path('deconnexion') }}" class="btn btn-danger align-middle">
-                        <i class="fa fa-sign-out-alt"></i>
-                        Déconnexion
-                    </a>
-                {% else %}
-                    <a href="{{ path('connexion') }}" class="btn btn-outline-danger align-middle">
-                        <i class="fa fa-user"></i>
-                        Connexion
-                    </a>
-                    <a href="{{ path('inscription') }}" class="btn btn-danger align-middle">
-                        <i class="fa fa-user-plus"></i>
-                        Inscription
-                    </a>
-                {% endif %}
-                {#</div>#}
-            </div>
         </div>
+    </div>
+</div>
+<div class="container-fluid bg-danger">
+    <div class="container">
         {#MENU#}
-        <div class="navbar text-uppercase">
-            <a href="{{ path('accueil') }}" class="lienMenu p-2">Accueil</a>
-            <a href="{{ path('articles') }}" class="lienMenu p-2">Actualité</a>
-            <a href="{{ path('evenement_index') }}" class="lienMenu p-2">&Eacute;vénements</a>
-            <a href="{{ path('recrutement') }}" class="lienMenu p-2">Nous rejoindre</a>
-            <a href="{{ path('leCentre') }}" class="lienMenu p-2">Le centre</a>
-            <a href="{{ path('contact') }}" class="lienMenu p-2">Contact</a>
+        <div class="navbar text-uppercase p-0">
+            <a href="{{ path('articles') }}" class="lienMenu p-3">Actualité</a>
+            <a href="{{ path('evenement_index') }}" class="lienMenu p-3">&Eacute;vénements</a>
+            <a href="{{ path('recrutement') }}" class="lienMenu p-3">Nous rejoindre</a>
+            <a href="{{ path('leCentre') }}" class="lienMenu p-3">Le centre</a>
+            <a href="{{ path('contact') }}" class="lienMenu p-3">Contact</a>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="#" class="lienMenu p-3" id="dropdownAccount" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user"></i> {{ app.user.prenom }} <i class="fa fa-caret-down ml-2"></i>
+                    <div class="dropdown-menu dropdownAccount" aria-labelledby="dropdownAccount">
+                        <a class="dropdown-item" href="#">Mon compte</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('administration') }}" class="dropdown-item">
+                                Administration
+                            </a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ path('deconnexion') }}">Déconnexion</a>
+                    </div>
+                </a>
+            {% else %}
+                <a href="{{ path('connexion') }}" class="lienMenu p-3">Accès membre</a>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -112,11 +108,6 @@
 <div class="container-fluid d-none d-md-block border-top border-danger">
     <div class="container py-3">
         <div class="row text-center">
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('administration') }}" class="col text-white">
-                    Administration
-                </a>
-            {% endif %}
             <a href="http://www.sdis44.fr/" target="_blank" class="col text-white">
                 SDIS 44
             </a>
@@ -142,7 +133,7 @@
     </div>
 </div>
 <script src="{{ asset('js/jquery.js') }}"></script>
-<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 {% block javascripts %}{% endblock %}
 <script src="{{ asset('js/main.js') }}"></script>

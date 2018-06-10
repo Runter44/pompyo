@@ -22,16 +22,16 @@ class InscriptionEvenementType extends AbstractType
                 )
             ))
             ->add('nbEnfants', NumberType::class, array(
-                'label' => 'Nombre d\'enfants présents (-12 ans)',
+                'label' => 'Nombre de moins de 12 ans présents',
                 'invalid_message' => 'Vous devez entrer un nombre valide',
                 'attr' => array(
-                    'placeholder' => 'Nombre d\'enfants'
+                    'placeholder' => 'Nombre de moins de 12 ans'
                 )
             ))
             ->add('commentaires', TextareaType::class, array(
                 'label' => 'Commentaires',
                 'attr' => array(
-                    'placeholder' => 'Veuillez renseigner des éléments importants à nous transmettre',
+                    'placeholder' => 'Veuillez renseigner des éléments à nous transmettre',
                     'rows' => '3',
                     'maxlength' => '500',
                 )

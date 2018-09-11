@@ -1,9 +1,0 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Modifier l'événement{% endblock %}
-
-{% block body %}
-    <h1 class="mb-3">Modifier l'événement {{ evenement.nom }}</h1>
-
-    {{ include('evenement/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
-{% endblock %}

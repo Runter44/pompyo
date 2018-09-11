@@ -37,3 +37,25 @@ services:
             - { name: twig.extension }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    admin.article:
+            class: App\Admin\ArticleAdmin
+            arguments: [~, App\Entity\Article, ~]
+            tags:
+                - { name: sonata.admin, manager_type: orm, label: Articles, group: Articles, on_top: true, icon: '<i class="fa fa-file"></i>' }
+            public: true
+
+    admin.evenement:
+        class: App\Admin\EvenementAdmin
+        arguments: [~, App\Entity\Evenement, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Événements, group: Événements, on_top: true, icon: '<i class="fa fa-calendar"></i>' }
+        public: true
+
+    admin.utilisateur:
+        class: App\Admin\UtilisateurAdmin
+        arguments: [~, App\Entity\Utilisateur, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Utilisateurs, group: Utilisateurs, on_top: true, icon: '<i class="fa fa-users"></i>' }
+        public: true
+

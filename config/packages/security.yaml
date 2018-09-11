@@ -11,8 +11,8 @@ security:
                 property: email
     role_hierarchy:
         ROLE_PRIVE: ROLE_USER
-        ROLE_ADMIN: [ROLE_PRIVE, ROLE_USER]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_PRIVE, ROLE_USER]
+        ROLE_ADMIN: [ROLE_PRIVE, ROLE_USER, ROLE_ADMIN_UTILISATEUR_LIST, ROLE_ADMIN_UTILISATEUR_VIEW, ROLE_ADMIN_EVENEMENT_ALL, ROLE_ADMIN_ARTICLE_ALL]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_PRIVE, ROLE_USER, ROLE_ADMIN_UTILISATEUR_ALL, ROLE_ADMIN_EVENEMENT_ALL, ROLE_ADMIN_ARTICLE_ALL]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -42,3 +42,4 @@ security:
         - { path: ^/articles/nouveau/, role: ROLE_ADMIN }
         - { path: ^/articles/supprimer/, role: ROLE_ADMIN }
         - { path: ^/articles/modifier/, role: ROLE_ADMIN }
+        - { path: ^/admin/, role: ROLE_ADMIN }

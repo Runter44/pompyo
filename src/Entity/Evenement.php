@@ -75,6 +75,10 @@ class Evenement
      *
      * @Assert\NotBlank(message="La date de début est invalide")
      * @Assert\Date(message="La date de début est invalide")
+     * @Assert\Range(
+     *      min = "now",
+     *      minMessage = "Cette date est déjà passée !"
+     * )
      */
     private $dateDebut;
 

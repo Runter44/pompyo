@@ -4,13 +4,6 @@
 
 {% block body %}
     <h1>Événements à venir</h1>
-    {% if is_granted('ROLE_ADMIN') %}
-        <div class="d-flex justify-content-center">
-            <a href="{{ path('evenement_new') }}" class="btn btn-danger my-2">
-                <i class="fa fa-plus"></i> Nouvel événement
-            </a>
-        </div>
-    {% endif %}
     {% set i = 0 %}
     {% for evenement in evenements %}
         {% if (evenement.roleMinimum == 'ROLE_USER' or ((evenement.roleMinimum == 'ROLE_PRIVE') and (is_granted('ROLE_PRIVE')))) and date(evenement.dateDebut|date_modify("+1 day")) >= date() %}

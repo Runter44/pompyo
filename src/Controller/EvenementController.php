@@ -27,54 +27,16 @@ class EvenementController extends Controller
      */
     public function index(EvenementRepository $evenementRepository): Response
     {
-        return $this->render('evenement/index.html.twig', ['evenements' => $evenementRepository->findAllOrderedByDate()]);
-    }
-
-    /**
-     * @Route("/nouveau/", name="evenement_new", methods="GET|POST")
-     *
-     * @param Request $request
-     * @param Slugger $slugger
-     * @return Response
-     */
-    public function new(Request $request, Slugger $slugger): Response
-    {
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
-        $evenement = new Evenement();
-        $evenement->setInscriptionPossible(true);
-        $evenement->setVisiblePublic(true);
-        $form = $this->createForm(EvenementType::class, $evenement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($evenement->getVisiblePublic() === false) {
-                $evenement->setRoleMinimum('ROLE_PRIVE');
-            } else {
-                $evenement->setRoleMinimum('ROLE_USER');
+        foreach ($evenementRepository->findAll() as $evenement) {
+            if ($evenement->getDateDebut() < new \DateTime()) {
+                foreach ($evenement->getInscriptionEvenements() as $inscriptionEvenement) {
+                    $this->getDoctrine()->getManager()->remove($inscriptionEvenement);
+                }
+                $this->getDoctrine()->getManager()->remove($evenement);
+                $this->getDoctrine()->getManager()->flush();
             }
-            $evenement->setSlug($slugger->genererSlug($evenement->getNom()));
-
-            if ($evenement->getInscriptionPossible() === false) {
-                $evenement->setDateLimiteInscription(null);
-            } elseif ($evenement->getInscriptionPossible() === true && $evenement->getDateLimiteInscription() === null) {
-                $evenement->setDateLimiteInscription($evenement->getDateDebut());
-            }
-
-            if ($evenement->getDateLimiteInscription() != null && ($evenement->getDateLimiteInscription() > $evenement->getDateDebut())) {
-                $evenement->setDateLimiteInscription($evenement->getDateDebut());
-            }
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($evenement);
-            $em->flush();
-
-            return $this->redirectToRoute('evenement_index');
         }
-
-        return $this->render('evenement/new.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form->createView(),
-        ]);
+        return $this->render('evenement/index.html.twig', ['evenements' => $evenementRepository->findAllOrderedByDate()]);
     }
 
     /**
@@ -135,74 +97,6 @@ class EvenementController extends Controller
         }
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('evenement/participants.html.twig', ['evenement' => $evenement]);
-    }
-
-    /**
-     * @Route("/{slug}/modifier/", name="evenement_edit", methods="GET|POST")
-     *
-     * @param Request $request
-     * @param Evenement $evenement
-     * @param Slugger $slugger
-     * @return Response
-     */
-    public function edit(Request $request, Evenement $evenement, Slugger $slugger): Response
-    {
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
-        $form = $this->createForm(EvenementType::class, $evenement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            if ($evenement->getVisiblePublic() === false) {
-                $evenement->setRoleMinimum('ROLE_PRIVE');
-            } else {
-                $evenement->setRoleMinimum('ROLE_USER');
-            }
-            $evenement->setSlug($slugger->genererSlug($evenement->getNom()));
-
-            if ($evenement->getInscriptionPossible() === false) {
-                $evenement->setDateLimiteInscription(null);
-            } elseif ($evenement->getInscriptionPossible() === true && $evenement->getDateLimiteInscription() === null) {
-                $evenement->setDateLimiteInscription($evenement->getDateDebut());
-            }
-
-            if ($evenement->getDateLimiteInscription() != null && ($evenement->getDateLimiteInscription() > $evenement->getDateDebut())) {
-                $evenement->setDateLimiteInscription($evenement->getDateDebut());
-            }
-
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('evenement_show', ['slug' => $evenement->getSlug()]);
-        }
-
-        return $this->render('evenement/edit.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{slug}/", name="evenement_delete", methods="DELETE")
-     *
-     * @param Request $request
-     * @param Evenement $evenement
-     * @return Response
-     */
-    public function delete(Request $request, Evenement $evenement): Response
-    {
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
-        if ($this->isCsrfTokenValid('delete' . $evenement->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-
-            foreach ($evenement->getInscriptionEvenements() as $inscriptionEvenement) {
-                $em->remove($inscriptionEvenement);
-            }
-
-            $em->remove($evenement);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('evenement_index');
     }
 
     /**

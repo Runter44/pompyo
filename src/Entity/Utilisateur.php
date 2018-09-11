@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use App\Utils\PasswordGenerator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -183,7 +185,7 @@ class Utilisateur implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->password,
-        ) = unserialize($serialized, ['allowed_classes' => false]);
+            ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     /**

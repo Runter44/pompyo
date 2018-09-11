@@ -18,12 +18,6 @@
                     <i class="fa fa-users"></i> Participants
                 </a>
             {% endif %}
-
-            <a href="{{ path('evenement_edit', {'slug': evenement.slug}) }}" class="btn btn-danger mr-2">
-                <i class="far fa-edit"></i> Modifier
-            </a>
-
-            {{ include('evenement/_delete_form.html.twig') }}
         </div>
     {% endif %}
 

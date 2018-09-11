@@ -41,7 +41,7 @@
                     <div class="dropdown-menu dropdownAccount" aria-labelledby="dropdownAccount">
                         <a class="dropdown-item" href="#">Mon compte</a>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('administration') }}" class="dropdown-item">
+                            <a href="/admin" class="dropdown-item" target="_blank">
                                 Administration
                             </a>
                         {% endif %}

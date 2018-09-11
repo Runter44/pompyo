@@ -134,4 +134,9 @@ class InscriptionEvenement
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return "Inscrit à l'événement " . $this->getEvenement()->getNom() . " pour " . $this->getNbAdultes() . " adultes et " . $this->getNbEnfants() . " moins de 12 ans. Commentaire : \"" . $this->getCommentaires() . "\"";
+    }
 }
